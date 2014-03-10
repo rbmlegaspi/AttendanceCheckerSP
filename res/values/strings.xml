@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AttendanceCheckerMenu</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="create_button">Create New Classlist</string>
+    <string name="edit_button">Edit existing classlists</string>
+    <string name="view_button">View all classlists</string>
+    <string name="attendance_button">Take Attendance</string>
+    <string name="title_activity_create_menu">CreateMenu</string>
+    <string name="text_class_name">Class Name</string>
+    <string name="text_num_students">Number of Students</string>
+    <string name="text_import">Import Class List</string>
+    <string name="text_save">Save</string>
+    <string name="title_activity_view_class_list">ViewClassList</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_main">Items</string>
+    <string name="title_activity_file_manager">FileManager</string>
+    <string name="title_activity_view_section">ViewSection</string>
+
+</resources>

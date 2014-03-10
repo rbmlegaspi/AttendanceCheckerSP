@@ -1,0 +1,41 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relay"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black_overlay" >
+
+    <FrameLayout
+        android:id="@+id/camera_preview"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" >
+
+    </FrameLayout>
+	
+	<GridView
+	    android:id="@+id/gridView1"
+	    android:layout_width="match_parent"
+	    android:layout_height="140dp"
+	    android:layout_below="@+id/camera_preview"
+	    android:numColumns="6" >
+	</GridView>
+	<GridView
+	    android:id="@+id/gridview"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_below="@+id/gridView1"
+	    android:layout_gravity="bottom"
+	    android:columnWidth="90dp"
+	    android:gravity="center"
+	    android:horizontalSpacing="10dp"
+	    android:numColumns="5"
+	    android:stretchMode="columnWidth"
+	    android:verticalSpacing="10dp" >
+
+</GridView>
+
+    
+</RelativeLayout>
+

@@ -1,0 +1,138 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    tools:context=".FullscreenActivity" >
+
+    <!--
+         The primary full-screen view. This can be replaced with whatever view
+         is needed to present your content, e.g. VideoView, SurfaceView,
+         TextureView, etc.
+    -->
+
+    <TextView
+        android:id="@+id/fullscreen_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        android:textColor="#33b5e5"
+        android:textSize="50sp"
+        android:textStyle="bold" />
+
+    <!--
+         This FrameLayout insets its children based on system windows using
+         android:fitsSystemWindows.
+    -->
+
+    
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/createButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="18dp"
+                android:text="@string/create_button"
+                android:onClick="createMenu"
+                 />
+
+            <Button
+                android:id="@+id/viewButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/editButton"
+                android:layout_below="@+id/editButton"
+                android:layout_marginTop="19dp"
+                android:text="@string/view_button"
+                android:onClick="viewMenu"
+                 />
+
+            <Button
+                android:id="@+id/attendanceButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/viewButton"
+                android:layout_below="@+id/viewButton"
+                android:layout_marginTop="22dp"
+                android:text="@string/attendance_button"
+                android:onClick="onClick"
+                 />
+
+            <Button
+                android:id="@+id/editButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/createButton"
+                android:layout_below="@+id/createButton"
+                android:layout_marginTop="18dp"
+                android:text="@string/edit_button"
+                android:onClick="editMenu" />
+
+            <ImageButton
+                android:id="@+id/imageButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/attendanceButton"
+                android:layout_below="@+id/attendanceButton"
+                android:layout_marginLeft="48dp"
+                android:layout_marginTop="50dp"
+                android:src="@drawable/add" 
+                android:onClick="createMenu"
+                />
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/imageButton1"
+                android:layout_marginLeft="37dp"
+                android:layout_toRightOf="@+id/imageButton1"
+                android:src="@drawable/view"
+                android:onClick="viewMenu"
+                 />
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/imageButton1"
+                android:layout_below="@+id/imageButton1"
+                android:layout_marginTop="54dp"
+                android:src="@drawable/check" 
+                android:onClick="takeAttendance"
+                />
+
+            <ImageButton
+                android:id="@+id/imageButton4"
+                android:contentDescription="Edit Menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/imageButton2"
+                android:layout_alignTop="@+id/imageButton3"
+                android:src="@drawable/pencil" 
+                android:onClick="editMenu"
+                />
+
+            <ImageButton
+                android:id="@+id/imageButton5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/imageButton2"
+                android:layout_alignTop="@+id/editButton"
+                android:layout_marginTop="23dp"
+                android:src="@drawable/tools"
+                android:onClick="debug"
+                 />
+
+        </RelativeLayout>
+    
+
+
+</FrameLayout>
