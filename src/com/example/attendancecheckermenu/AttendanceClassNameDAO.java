@@ -68,13 +68,19 @@ public class AttendanceClassNameDAO {
 	}
 	
 	public void dropAndCreateClassListDebug(){
-		db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_PICDB);
-		db.execSQL("CREATE TABLE "+AttendanceDbHelper.DB_TABLE_PICDB+" ("
-				+ AttendanceDbHelper.COL_PICTURE_LOCAL_PATH +" TEXT NOT NULL,"
-				+ AttendanceDbHelper.COL_PICTURE_STDNUM +" TEXT NOT NULL,"
-				+ AttendanceDbHelper.COL_PICTURE_STDNAME +" TEXT NOT NULL,"
-				+ AttendanceDbHelper.COL_PICTURE_DATE_TAKEN +" TEXT NOT NULL,"
-				+ AttendanceDbHelper.COL_PICTURE_CLASS_NAME +" TEXT NOT NULL"
+		Log.d("FullscreenActivity","asd");
+		db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_CLASS_LIST);
+		db.execSQL("CREATE TABLE "+AttendanceDbHelper.DB_TABLE_CLASS_LIST+" ("
+				+ AttendanceDbHelper.COL_STDNUM +" TEXT PRIMARY KEY,"
+				+ AttendanceDbHelper.COL_STDNAME+" INTEGER NOT NULL,"
+				+ AttendanceDbHelper.COL_CLASS_NAME + " TEXT NOT NULL,"
+				+ AttendanceDbHelper.COL_LEC_SECTION+" TEXT NOT NULL,"
+				+ AttendanceDbHelper.COL_SECTION+" INTEGER NOT NULL,"
+				+ AttendanceDbHelper.COL_STDPIC +" TEXT NOT NULL,"
+				+ AttendanceDbHelper.COL_NUM_ABSENCES + " TEXT NOT NULL,"
+				+ AttendanceDbHelper.COL_EXCESSIVE + " TEXT NOT NULL,"
+				+ AttendanceDbHelper.COL_DATES_ABSENT + " TEXT NOT NULL,"
+				+ AttendanceDbHelper.COL_HAS_TAKEN_PICTURE + " TEXT NOT NULL"
 				+ ");"
 		);
 	}

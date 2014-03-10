@@ -11,6 +11,7 @@ public class ClassList{
 	private int numOfAbsences;
 	private boolean excessive;
 	private String dates_absent;
+	private boolean hasPictureTaken;
 	
 	public String getStudentNumber() {
 		return studentNumber;
@@ -65,6 +66,12 @@ public class ClassList{
 	}
 	public void setClassName(String className) {
 		this.className = className;
+	}
+	public boolean hasPictureTakenM() {
+		return hasPictureTaken;
+	}
+	public void setHasPictureTaken(boolean hasPictureTaken) {
+		this.hasPictureTaken = hasPictureTaken;
 	}	
 	
 }

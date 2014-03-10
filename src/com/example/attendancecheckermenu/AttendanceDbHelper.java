@@ -33,6 +33,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper{
 	public static final String COL_NUM_ABSENCES = "NUM_OF_ABSENCES";
 	public static final String COL_EXCESSIVE = "EXCESSIVE";
 	public static final String COL_DATES_ABSENT = "DATES_ABSENT";
+	public static final String COL_HAS_TAKEN_PICTURE = "HAS_TAKEN_PICTURE";
 	
 	public static final String COL_PASSWORD = "PASSWORD";
 	public static final String COL_PASSWORD_MD5 = "PASSWORD_MD5";
@@ -75,7 +76,8 @@ public class AttendanceDbHelper extends SQLiteOpenHelper{
 				+ COL_STDPIC +" TEXT NOT NULL,"
 				+ COL_NUM_ABSENCES + " TEXT NOT NULL,"
 				+ COL_EXCESSIVE + " TEXT NOT NULL,"
-				+ COL_DATES_ABSENT + "TEXT NOT NULL"
+				+ COL_DATES_ABSENT + " TEXT NOT NULL,"
+				+ COL_HAS_TAKEN_PICTURE + " TEXT NOT NULL"
 				+ ");"
 		);
 		

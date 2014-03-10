@@ -36,10 +36,16 @@ public class PhotoHandler implements PictureCallback {
   private GridView gridview;
   private ArrayList<String> studentName;
   private PhotoDAO pd;
+  private String dateTaken;
+  private String studentNumber;
+  private String className;
   
-  public PhotoHandler(Context context,String filename,File pictureFile,View v,View v2,ArrayList<Bitmap> images,ArrayList<String> studentName,int position,Camera mCamera,GridView gridview) {
+  public PhotoHandler(Context context,String filename,String studentNumber,String className,File pictureFile,String dateTaken,View v,View v2,ArrayList<Bitmap> images,ArrayList<String> studentName,int position,Camera mCamera,GridView gridview) {
     this.context = context;
     this.filename = filename;
+    this.className = className;
+    this.studentNumber = studentNumber;
+    this.dateTaken = dateTaken;
     this.pictureFile = pictureFile;
     this.img = (ImageView) v;
     this.txt = (TextView) v2;
@@ -66,10 +72,19 @@ public class PhotoHandler implements PictureCallback {
       images.set(position, bitmap);
       img.setImageBitmap(bitmap);
       pd = new PhotoDAO(context);
+      AttendanceListDAO ald = new AttendanceListDAO(context);
+      ald.open();
+      Log.d("MainActivity",studentName.get(position));
+      ald.studentTakesPic(className, studentName.get(position));
+      Log.d("MainActivity",ald.getPicTaken(className, studentName.get(position)));
+      
+      ald.close();
+      
       pd.open();
+ 
       
 //    TODO get the student number of the student
-      pd.insertPhotoToDb(pictureFile.getAbsolutePath(), null, studentName.get(position), dateTaken, className);
+//      pd.insertPhotoToDb(pictureFile.getAbsolutePath(), studentNumber, studentName.get(position), dateTaken, className);
       
       pd.close();
       

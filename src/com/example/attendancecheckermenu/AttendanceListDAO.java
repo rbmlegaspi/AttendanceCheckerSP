@@ -24,7 +24,8 @@ public class AttendanceListDAO {
 			AttendanceDbHelper.COL_STDPIC,
 			AttendanceDbHelper.COL_NUM_ABSENCES,
 			AttendanceDbHelper.COL_EXCESSIVE,
-			AttendanceDbHelper.COL_DATES_ABSENT
+			AttendanceDbHelper.COL_DATES_ABSENT,
+			AttendanceDbHelper.COL_HAS_TAKEN_PICTURE
 	}; 
 	private Context c;
 	
@@ -56,6 +57,7 @@ public class AttendanceListDAO {
 		values.put(AttendanceListCol[6], 0);
 		values.put(AttendanceListCol[7], "false");
 		values.put(AttendanceListCol[8], "none");
+		values.put(AttendanceListCol[9], "false");
 		long insertClassList = db.insert(AttendanceDbHelper.DB_TABLE_CLASS_LIST, null, values);
 		
 		return insertClassList;
@@ -83,6 +85,29 @@ public class AttendanceListDAO {
 		
 	}
 	
+	public ArrayList<String> viewClassListPerSectionStdNum(String className,String section){
+		ArrayList<String> students = new ArrayList<String>();
+		String[] studentCol = {AttendanceDbHelper.COL_STDNUM};
+		
+		
+		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_CLASS_LIST, 
+				studentCol, AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"' and "+
+						AttendanceDbHelper.COL_SECTION+" = '"+section+"'",
+						null,
+						null, null, null);
+		
+		c.moveToFirst();
+		
+		while(!c.isAfterLast()){
+			students.add(c.getString(0));
+			c.moveToNext();
+		}
+		
+		return students;
+		
+	}
+
+	
 	public ArrayList<ClassList> viewClassListFromClass(String className){
 		ArrayList<ClassList> ClassList = new ArrayList<ClassList>();
 		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_CLASS_LIST, AttendanceListCol, AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"'", null,null,null,null);
@@ -101,12 +126,44 @@ public class AttendanceListDAO {
 			cl.setNumOfAbsences(c.getInt(6));
 			cl.setExcessive(Boolean.parseBoolean(c.getString(7)));
 			cl.setDates_absent(c.getString(8));
+			cl.setHasPictureTaken(Boolean.parseBoolean(c.getString(9)));
 			ClassList.add(cl);
 			c.moveToNext();
 		}
 		
 		c.close();
 		return ClassList;
+	}
+	
+	public void studentTakesPic(String className, String studentName){
+		ContentValues cv = new ContentValues();
+		cv.put(AttendanceDbHelper.COL_HAS_TAKEN_PICTURE, "true");
+		db.update(AttendanceDbHelper.DB_TABLE_CLASS_LIST, cv, 
+				AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"' and "+
+				AttendanceDbHelper.COL_STDNAME+" = '"+studentName+"'"
+				, null);
+	}
+	
+	public String getPicTaken(String className,String studentName){
+		String[] sectionCol = {AttendanceDbHelper.COL_HAS_TAKEN_PICTURE};
+		Cursor c = db.query(true, AttendanceDbHelper.DB_TABLE_CLASS_LIST, sectionCol, 
+				AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"' and "+
+				AttendanceDbHelper.COL_STDNAME+" = '"+studentName+"'",
+				null, null, null, null, null);
+		
+		c.moveToFirst();
+		
+		return c.getString(0);
+	};
+	
+	public void setNoPicToAbsent(String className,String student){
+		ContentValues cv = new ContentValues();
+		cv.put(AttendanceDbHelper.COL_HAS_TAKEN_PICTURE, "false");
+		
+		db.update(AttendanceDbHelper.DB_TABLE_CLASS_NAME, cv, 
+				AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"' and "+
+				AttendanceDbHelper.COL_STDNAME+" = '"+student+"'"
+				, null);
 	}
 	
 	public ArrayList<String> viewAllSections(String className){
@@ -124,6 +181,12 @@ public class AttendanceListDAO {
 		
 		return sections;
 		
+	}
+	
+	public void resetToFalse(String className){			
+			ContentValues cv = new ContentValues();
+			cv.put(AttendanceDbHelper.COL_HAS_TAKEN_PICTURE, "false");
+			db.update(AttendanceDbHelper.DB_TABLE_CLASS_NAME, cv, AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"'", null);
 	}
 	
 	public ArrayList<ClassList> viewClassList() 
@@ -145,6 +208,7 @@ public class AttendanceListDAO {
 			cl.setNumOfAbsences(c.getInt(6));
 			cl.setExcessive(Boolean.parseBoolean(c.getString(7)));
 			cl.setDates_absent(c.getString(8));
+			cl.setHasPictureTaken(Boolean.parseBoolean(c.getString(7)));
 			ClassList.add(cl);
 			c.moveToNext();
 		}

@@ -289,7 +289,7 @@ public class FullscreenActivity extends Activity {
 		AttendanceClassNameDAO acnd = new AttendanceClassNameDAO(getApplicationContext());
 		
 		acnd.open();
-//		acnd.setClassListToFalse("CMSC 125 s");
+		acnd.setClassListToFalse("CMSC 125 s");
 		acnd.dropAndCreateClassListDebug();
 		acnd.close();
 	}

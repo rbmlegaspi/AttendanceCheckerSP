@@ -45,7 +45,6 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int StudentNumItem=0x7f090003;
         public static final int action_settings=0x7f090026;
         public static final int attendanceButton=0x7f090014;
-        public static final int button1=0x7f09000f;
         public static final int button2=0x7f09001a;
         public static final int camera_preview=0x7f09001f;
         public static final int classList=0x7f09001c;
@@ -53,6 +52,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int className=0x7f090002;
         public static final int createButton=0x7f090011;
         public static final int editButton=0x7f090013;
+        public static final int finishAttendance=0x7f09000f;
         public static final int fullscreen_content=0x7f090010;
         public static final int gridView1=0x7f090020;
         public static final int grid_item_image=0x7f090025;

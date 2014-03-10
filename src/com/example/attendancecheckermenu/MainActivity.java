@@ -6,6 +6,7 @@ import android.app.Activity;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -51,6 +52,8 @@ public class MainActivity extends Activity {
   private String currSection;
   private HashMap<String,ArrayList<String>> sectionMap;
   private HashMap<String,ArrayList<Bitmap>> bitMap;
+  private HashMap<String,ArrayList<String>> studentNumMap;
+  
   
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -73,12 +76,15 @@ public class MainActivity extends Activity {
     int index=0;
     
     sectionMap = new HashMap<String, ArrayList<String>>();
+    studentNumMap = new HashMap<String, ArrayList<String>>();
     bitMap = new HashMap<String, ArrayList<Bitmap>>();
     
     for(String s: sectionList){
     	
     	ArrayList<String> studTemp = ald.viewClassListPerSection(className, s);
     	sectionMap.put(s, studTemp);
+    	ArrayList<String> studNTemp = ald.viewClassListPerSectionStdNum(className, s);
+    	studentNumMap.put(s, studNTemp);
     	
     	ArrayList<Bitmap> bitTemp = new ArrayList<Bitmap>();
     	for(int i=0;i<sectionMap.get(s).size();i++){
@@ -98,8 +104,9 @@ public class MainActivity extends Activity {
     gridviewButtons.setOnItemClickListener(new OnItemClickListener() {
     	
     	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
-    		classListArrayTemp = sectionMap.get(sectionList.get(position));
-    		pictureArrayTemp = bitMap.get(sectionList.get(position));
+    		currSection = sectionList.get(position);
+    		classListArrayTemp = sectionMap.get(currSection);
+    		pictureArrayTemp = bitMap.get(currSection);
     		imgAdapter = new ImageAdapter(getApplicationContext(),classListArrayTemp,pictureArrayTemp,imageV);
     		gridview.setAdapter(imgAdapter);
     	}
@@ -122,13 +129,36 @@ public class MainActivity extends Activity {
     	    File pictureFile = new File(filename);
     	    ImageView img = (ImageView) v.findViewById(R.id.grid_item_image);
             TextView txt = (TextView) v.findViewById(R.id.grid_item_label);
+            String studentNumber = studentNumMap.get(currSection).get(position);
+            Log.d("MainActivity",studentNumber);
 //    	    mCamera.takePicture(null, null, new PhotoHandler(getApplicationContext(),filename,pictureFile,img,txt,pictureArrayTemp,classListArrayTemp,position,mCamera,gridview,imgAdapter));
-    	    mCamera.takePicture(null, null, new PhotoHandler(getApplicationContext(),filename,pictureFile,img,txt,pictureArrayTemp,classListArrayTemp,position,mCamera,gridview));
+    	 
+            mCamera.takePicture(null, null, new PhotoHandler(getApplicationContext(),filename,studentNumber,className, pictureFile,date, img,txt,pictureArrayTemp,classListArrayTemp,position,mCamera,gridview));
     	}
     });
     
    }
 
+  
+  public void finishAttendance(View view){
+	  ald = new AttendanceListDAO(getApplicationContext());
+	  ald.open();
+
+	  ArrayList<ClassList> classList = ald.viewClassListFromClass(className);
+	  
+	  for (ClassList cl : classList) {
+		if(cl.hasPictureTakenM()){
+			Log.d("MainActivity",cl.getStudentName()+" is present");
+		}	
+		else{
+			Log.d("MainActivity",cl.getStudentName()+" is absent");
+		}
+	  }
+	  
+	  ald.resetToFalse(className);
+	  
+	  ald.close();
+  }
   
   private File getDir() {
 	    File sdDir = Environment
@@ -169,6 +199,8 @@ public class MainActivity extends Activity {
 	  
 	  
   }
+  
+  
   
   protected void onPause() {
 	    if (mCamera != null) {
