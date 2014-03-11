@@ -9,7 +9,7 @@
     tools:context=".MainActivity" >
 
     <TextView
-        android:id="@+id/section"
+        android:id="@+id/sectionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/hello_world" />
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/section"
+        android:layout_below="@+id/sectionText"
         android:layout_marginTop="40dp"
         android:text="Button" />
 
@@ -28,7 +28,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/finishAttendance"
-        android:layout_toRightOf="@+id/section"
+        android:layout_toRightOf="@+id/sectionText"
         android:text="Button" />
 
 </RelativeLayout>

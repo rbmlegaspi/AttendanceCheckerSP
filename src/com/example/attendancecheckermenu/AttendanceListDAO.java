@@ -135,6 +135,30 @@ public class AttendanceListDAO {
 		return ClassList;
 	}
 	
+	public ClassList viewClassListFromClassPerName(String studentName,String className){
+		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_CLASS_LIST, AttendanceListCol, 
+				AttendanceDbHelper.COL_STDNAME+" = '"+studentName+"' and "+
+				AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"'", 
+				null,null,null,null);
+			
+		c.moveToFirst();
+			
+		ClassList cl = new ClassList();
+		cl.setStudentNumber(c.getString(0));
+		cl.setStudentName(c.getString(1));
+		cl.setClassName(c.getString(2));
+		cl.setLectureSection(c.getString(3));
+		cl.setSection(c.getString(4));
+		cl.setStudentPicPath(c.getString(5));
+		cl.setNumOfAbsences(c.getInt(6));
+		cl.setExcessive(Boolean.parseBoolean(c.getString(7)));
+		cl.setDates_absent(c.getString(8));
+		cl.setHasPictureTaken(Boolean.parseBoolean(c.getString(9)));
+		
+		c.close();
+		return cl;
+	}
+	
 	public void studentTakesPic(String className, String studentName){
 		ContentValues cv = new ContentValues();
 		cv.put(AttendanceDbHelper.COL_HAS_TAKEN_PICTURE, "true");

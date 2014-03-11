@@ -79,13 +79,9 @@ public class PhotoHandler implements PictureCallback {
       Log.d("MainActivity",ald.getPicTaken(className, studentName.get(position)));
       
       ald.close();
-      
-      pd.open();
- 
-      
+      pd.open();      
 //    TODO get the student number of the student
-//      pd.insertPhotoToDb(pictureFile.getAbsolutePath(), studentNumber, studentName.get(position), dateTaken, className);
-      
+      pd.insertPhotoToDb(pictureFile.getAbsolutePath(), studentNumber, studentName.get(position), dateTaken, className);
       pd.close();
       
     } catch (Exception error) {

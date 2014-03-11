@@ -51,7 +51,7 @@ public class ButtonAdapter extends BaseAdapter{
 	    }
 		
 		t = (TextView) v
-				.findViewById(R.id.section);
+				.findViewById(R.id.sectionText);
 		t.setText(section.get(position));
 		
 	   

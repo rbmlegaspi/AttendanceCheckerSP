@@ -68,8 +68,16 @@ public class AttendanceClassNameDAO {
 	}
 	
 	public void dropAndCreateClassListDebug(){
-		Log.d("FullscreenActivity","asd");
-		db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_CLASS_LIST);
+		db.execSQL("DROP TABLE IF EXISTS "+AttendanceDbHelper.DB_TABLE_PICDB);
+		db.execSQL("CREATE TABLE "+AttendanceDbHelper.DB_TABLE_PICDB+" ("
+				+ AttendanceDbHelper.COL_PICTURE_LOCAL_PATH +" TEXT NOT NULL,"
+				+ AttendanceDbHelper.COL_PICTURE_STDNUM +" TEXT NOT NULL,"
+				+ AttendanceDbHelper.COL_PICTURE_STDNAME +" TEXT NOT NULL,"
+				+ AttendanceDbHelper.COL_PICTURE_DATE_TAKEN +" TEXT NOT NULL,"
+				+ AttendanceDbHelper.COL_PICTURE_CLASS_NAME +" TEXT NOT NULL"
+				+ ");"
+		);
+		/*db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_CLASS_LIST);
 		db.execSQL("CREATE TABLE "+AttendanceDbHelper.DB_TABLE_CLASS_LIST+" ("
 				+ AttendanceDbHelper.COL_STDNUM +" TEXT PRIMARY KEY,"
 				+ AttendanceDbHelper.COL_STDNAME+" INTEGER NOT NULL,"
@@ -82,7 +90,7 @@ public class AttendanceClassNameDAO {
 				+ AttendanceDbHelper.COL_DATES_ABSENT + " TEXT NOT NULL,"
 				+ AttendanceDbHelper.COL_HAS_TAKEN_PICTURE + " TEXT NOT NULL"
 				+ ");"
-		);
+		);*/
 	}
 	
 	public void createTableDebug()

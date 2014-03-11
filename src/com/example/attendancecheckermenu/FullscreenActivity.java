@@ -286,12 +286,27 @@ public class FullscreenActivity extends Activity {
 	
 	public void debug(View view)
 	{
-		AttendanceClassNameDAO acnd = new AttendanceClassNameDAO(getApplicationContext());
 		
+		AttendanceClassNameDAO acnd = new AttendanceClassNameDAO(getApplicationContext());
 		acnd.open();
-		acnd.setClassListToFalse("CMSC 125 s");
-		acnd.dropAndCreateClassListDebug();
+//		acnd.setClassListToTrue("CMSC 125 s");
+//		acnd.dropAndCreateClassListDebug();
 		acnd.close();
+		
+		/*
+		PhotoDAO pd = new PhotoDAO(getApplicationContext());
+		pd.open();
+		
+		ArrayList<Photo> photo = pd.getAllPhotosFromClass("CMSC 125 s");
+		
+		for (Photo p : photo) {
+			Log.d("FullscreenActivity","Path of file "+p.getPathOfFile());
+			Log.d("FullscreenActivity","Student Name "+p.getStdName());
+			Log.d("FullscreenActivity","Date Taken "+p.getDateTaken());	
+		}
+		
+		pd.close();
+		*/
 	}
 	
 	public class loadCsvContent extends AsyncTask<String, Integer, String>{

@@ -50,7 +50,7 @@ public class PhotoDAO {
 	}
 	
 	
-	public ArrayList<Photo> getAllPhotosFromDate(String dateTaken,String className){
+	public ArrayList<Photo> getAllPhotosFromDate(String dateTaken,String className) throws SQLException{
 		ArrayList<Photo> photoAL = new ArrayList<Photo>();
 		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_PICDB, PhotoTableCol,
 				AttendanceDbHelper.COL_PICTURE_DATE_TAKEN+" = '"+dateTaken+"' and "+
@@ -73,10 +73,11 @@ public class PhotoDAO {
 		return photoAL;
 	}
 	
-	public ArrayList<Photo> getAllPhotosFromStudent(String studentName){
+	public ArrayList<Photo> getAllPhotosFromStudent(String studentName,String className) throws SQLException{
 		ArrayList<Photo> photoAL = new ArrayList<Photo>();
 		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_PICDB, PhotoTableCol,
-				AttendanceDbHelper.COL_PICTURE_STDNAME+" = '"+studentName+"'",
+				AttendanceDbHelper.COL_PICTURE_STDNAME+" = '"+studentName+"' and " +
+				AttendanceDbHelper.COL_PICTURE_CLASS_NAME+" = '"+className+"'",
 				null, null, null, null);
 		
 		c.moveToFirst();
@@ -95,7 +96,7 @@ public class PhotoDAO {
 		return photoAL;
 	}
 	
-	public ArrayList<Photo> getAllPhotosFromClass(String className){
+	public ArrayList<Photo> getAllPhotosFromClass(String className) throws SQLException{
 		ArrayList<Photo> photoAL = new ArrayList<Photo>();
 		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_PICDB, PhotoTableCol,
 				AttendanceDbHelper.COL_PICTURE_CLASS_NAME+" = '"+className+"'",
@@ -117,7 +118,7 @@ public class PhotoDAO {
 		return photoAL;
 	}
 	
-	public ArrayList<Photo> getAllPhotos(){
+	public ArrayList<Photo> getAllPhotos() throws SQLException{
 		ArrayList<Photo> photoAL = new ArrayList<Photo>();
 		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_PICDB, PhotoTableCol, null, null, null, null, null);
 		

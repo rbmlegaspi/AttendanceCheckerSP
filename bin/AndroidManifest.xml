@@ -7,8 +7,9 @@
     <uses-sdk
         android:minSdkVersion="14"
         android:targetSdkVersion="17" />
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -48,6 +49,10 @@
             android:name="com.example.attendancecheckermenu.ViewSection"
             android:label="@string/title_activity_view_section" >
         </activity>
-      </application>
+        <activity
+            android:name="com.example.attendancecheckermenu.StudentInfoScreen"
+            android:label="@string/title_activity_student_info_screen" >
+        </activity>
+    </application>
 
 </manifest>

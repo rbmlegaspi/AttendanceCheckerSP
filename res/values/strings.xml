@@ -19,5 +19,6 @@
     <string name="title_activity_main">Items</string>
     <string name="title_activity_file_manager">FileManager</string>
     <string name="title_activity_view_section">ViewSection</string>
+    <string name="title_activity_student_info_screen">StudentInfoScreen</string>
 
 </resources>

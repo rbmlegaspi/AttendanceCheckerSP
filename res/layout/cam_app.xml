@@ -15,7 +15,7 @@
     </FrameLayout>
 	
 	<GridView
-	    android:id="@+id/gridView1"
+	    android:id="@+id/pictureGallery"
 	    android:layout_width="match_parent"
 	    android:layout_height="140dp"
 	    android:layout_below="@+id/camera_preview"
@@ -25,7 +25,7 @@
 	    android:id="@+id/gridview"
 	    android:layout_width="fill_parent"
 	    android:layout_height="fill_parent"
-	    android:layout_below="@+id/gridView1"
+	    android:layout_below="@+id/pictureGallery"
 	    android:layout_gravity="bottom"
 	    android:columnWidth="90dp"
 	    android:gravity="center"

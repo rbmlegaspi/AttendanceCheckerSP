@@ -4,10 +4,13 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -19,6 +22,8 @@ public class ViewSection extends Activity {
 	ArrayList<String> studentNameList = new ArrayList<String>();
 	ArrayList<String> studentNumberList = new ArrayList<String>();
 	String className;
+	String selectedStudent;
+	ListView studentList;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +39,7 @@ public class ViewSection extends Activity {
 		
 		
 		AttendanceListDAO ald = new AttendanceListDAO(getApplicationContext());
-		ListView studentList = (ListView) findViewById(R.id.classList);
+		studentList = (ListView) findViewById(R.id.classList);
 		TextView tv = (TextView) findViewById(R.id.textView10);
 		tv.setText(className);
         ald.open();
@@ -52,7 +57,19 @@ public class ViewSection extends Activity {
         
         StudentNumNameAdapter adapter = new StudentNumNameAdapter(ViewSection.this, studentNameList, studentNumberList);
         studentList.setAdapter(adapter);
-		
+		studentList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> parent, View view, int position,
+					long id) {
+
+				 selectedStudent = (String) (studentList.getItemAtPosition(position));
+				 Log.d("ViewSection",selectedStudent);
+				 Intent intent = new Intent(getApplicationContext(), StudentInfoScreen.class);
+				 intent.putExtra("studentName", selectedStudent);
+				 intent.putExtra("className", className);
+				 startActivity(intent);
+			}
+		});
 	}
 
 

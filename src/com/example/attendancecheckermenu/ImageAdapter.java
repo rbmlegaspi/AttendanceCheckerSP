@@ -68,7 +68,6 @@ public class ImageAdapter extends BaseAdapter{
 		
 		if (convertView == null) {  // if it's not recycled, initialize some attributes
 			gridView = new View(mContext);
-			
 			gridView = inflater.inflate(R.layout.mobile, null);
 			
 			studentName = (TextView) gridView
@@ -82,59 +81,22 @@ public class ImageAdapter extends BaseAdapter{
 				
 			}
 			
-			/*
-			Canvas c = new Canvas(b);
-			Paint p = new Paint();
-			p.setAntiAlias(true);
-			p.setSubpixelText(true);
-			p.setStyle(Paint.Style.FILL);
-			p.setColor(Color.BLACK);
-			p.setTextSize(10);
-			p.setTextAlign(Align.CENTER);
-			
-			c.drawText(classList[position], 20, 20, p);
-			imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(105, 105));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);*/
-            
+		    
         } else {
         	gridView = (View) convertView;
         	studentName = (TextView) gridView
 					.findViewById(R.id.grid_item_label);
 			studentName.setText(classList.get(position));
 			Bitmap bmp = Bitmap.createBitmap(85,85,Config.ARGB_8888);
-			Canvas c = new Canvas(bmp);
 			imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
 			if(images.get(position)==null) imageView.setImageBitmap(bmp);
 			else {
 				imageView.setImageBitmap(images.get(position));
 				
 			}
-//        	studentName = (TextView) convertView;
-        	
-//			if(images[position]!=null) img.setImageBitmap(images[position]);
-	//		else imageView.setImageBitmap(b);
-        	/*
-			Canvas c = new Canvas(b);
-			Paint p = new Paint();
-			p.setAntiAlias(true);
-			p.setSubpixelText(true);
-			p.setStyle(Paint.Style.FILL);
-			p.setColor(Color.BLACK);
-			p.setTextSize(10);
-			p.setTextAlign(Align.CENTER);
-			c.drawText(classList[position], 20, 20, p);
-			*/
-            //imageView = (ImageView) convertView;
         }
 
 		return gridView;
-		//if(images[position]!=null)imageView.setImageBitmap(images[position]);
-		//else imageView.setImageBitmap(b);
-		//return 0;
-		//return imageView;
-		//return gridView;
 	}
 	
 	

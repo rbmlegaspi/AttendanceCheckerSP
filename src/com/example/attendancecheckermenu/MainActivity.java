@@ -64,7 +64,7 @@ public class MainActivity extends Activity {
     
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     gridview = (GridView) findViewById(R.id.gridview);
-    gridviewButtons = (GridView) findViewById(R.id.gridView1);
+    gridviewButtons = (GridView) findViewById(R.id.pictureGallery);
     ald = new AttendanceListDAO(getApplicationContext());
     ald.open();
     className = getIntent().getExtras().getString("Class Name");
@@ -122,9 +122,9 @@ public class MainActivity extends Activity {
     	      Toast.makeText(MainActivity.this, "Can't create directory to save image.",Toast.LENGTH_LONG).show();
 
     	    }
-    	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyymmddhhmm");
+    	    SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yy hh:mm:ss");
     	    String date = dateFormat.format(new Date());
-    	    String photoFile = classListArrayTemp.get(position) + date + ".jpg";
+    	    String photoFile = classListArrayTemp.get(position)+" "+ date + ".jpg";
     	    String filename = pictureFileDir.getPath() + File.separator + photoFile;
     	    File pictureFile = new File(filename);
     	    ImageView img = (ImageView) v.findViewById(R.id.grid_item_image);
@@ -146,12 +146,21 @@ public class MainActivity extends Activity {
 
 	  ArrayList<ClassList> classList = ald.viewClassListFromClass(className);
 	  
+	  SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yy");
+	  String dateTaken = dateFormat.format(new Date());
+	  Log.d("MainActivity",dateTaken);
+	  
+	  
 	  for (ClassList cl : classList) {
 		if(cl.hasPictureTakenM()){
-			Log.d("MainActivity",cl.getStudentName()+" is present");
+//			Log.d("MainActivity",cl.getStudentName()+" is present");
 		}	
 		else{
-			Log.d("MainActivity",cl.getStudentName()+" is absent");
+	//		Log.d("MainActivity",cl.getStudentName()+" is absent");
+			PhotoDAO pd = new PhotoDAO(getApplicationContext());
+			pd.open();
+			pd.insertPhotoToDb("no picture", cl.getStudentNumber(), cl.getStudentName(), dateTaken, className);			
+			pd.close();
 		}
 	  }
 	  
