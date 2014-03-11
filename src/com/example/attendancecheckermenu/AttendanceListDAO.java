@@ -186,7 +186,7 @@ public class AttendanceListDAO {
 	public void resetToFalse(String className){			
 			ContentValues cv = new ContentValues();
 			cv.put(AttendanceDbHelper.COL_HAS_TAKEN_PICTURE, "false");
-			db.update(AttendanceDbHelper.DB_TABLE_CLASS_NAME, cv, AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"'", null);
+			db.update(AttendanceDbHelper.DB_TABLE_CLASS_LIST, cv, AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"'", null);
 	}
 	
 	public ArrayList<ClassList> viewClassList() 

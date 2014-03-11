@@ -156,8 +156,8 @@ public class MainActivity extends Activity {
 	  }
 	  
 	  ald.resetToFalse(className);
-	  
 	  ald.close();
+	  finish();
   }
   
   private File getDir() {
