@@ -96,6 +96,29 @@ public class PhotoDAO {
 		return photoAL;
 	}
 	
+	public ArrayList<Photo> getAllPhotosFromClassAndDate(String className,String dateTaken) throws SQLException{
+		ArrayList<Photo> photoAL = new ArrayList<Photo>();
+		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_PICDB, PhotoTableCol,
+				AttendanceDbHelper.COL_PICTURE_CLASS_NAME+" = '"+className+"' and" +
+				AttendanceDbHelper.COL_PICTURE_DATE_TAKEN+" = '"+dateTaken+"'",
+				null, null, null, null);
+		
+		c.moveToFirst();
+		
+		while(!c.isAfterLast()){
+			Photo tempClass = new Photo();
+			tempClass.setPathOfFile(c.getString(0));
+			tempClass.setStdNum(c.getString(1));
+			tempClass.setStdName(c.getString(2));
+			tempClass.setDateTaken(c.getString(3));
+			tempClass.setClassName(c.getString(4));
+			photoAL.add(tempClass);
+			c.moveToNext();
+		}
+		
+		return photoAL;
+	}
+	
 	public ArrayList<Photo> getAllPhotosFromClass(String className) throws SQLException{
 		ArrayList<Photo> photoAL = new ArrayList<Photo>();
 		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_PICDB, PhotoTableCol,

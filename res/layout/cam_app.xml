@@ -3,7 +3,7 @@
     android:id="@+id/relay"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_overlay" >
+    android:background="#FFFFFF" >
 
     <FrameLayout
         android:id="@+id/camera_preview"
@@ -35,17 +35,6 @@
 	    android:verticalSpacing="10dp" >
 
 </GridView>
-
-	<Button
-	    android:id="@+id/finishAttendance"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentTop="true"
-	    android:layout_marginTop="123dp"
-	    android:layout_toLeftOf="@+id/camera_preview"
-	    android:text="Finish taking Attendance" 
-	    android:onClick="finishAttendance"
-	    />
     
 </RelativeLayout>
 

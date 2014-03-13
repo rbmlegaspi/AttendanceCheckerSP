@@ -26,113 +26,104 @@
          android:fitsSystemWindows.
     -->
 
-    
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent" >
 
-            <Button
-                android:id="@+id/createButton"
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageButton6"
+                android:layout_alignTop="@+id/imageButton6"
+                android:layout_marginLeft="24dp"
+                android:layout_toRightOf="@+id/imageButton6"
+                android:gravity="center"
+                android:text="Check Attendance"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#000000"
+                android:textSize="40sp"
+               	android:clickable="true"
+               	android:onClick="takeAttendance"
+
+                 />
+
+            <ImageButton
+                android:id="@+id/imageButton6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="14dp"
-                android:layout_marginTop="18dp"
-                android:text="@string/create_button"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="51dp"
+                android:background="#FFFFFF"
+                android:clickable="true"
+                android:onClick="takeAttendance"
+                android:src="@drawable/cchk" />
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/textView2"
+                android:layout_alignTop="@+id/imageButton1"
+                android:layout_marginTop="32dp"
+                android:clickable="true"
+                android:gravity="center"
                 android:onClick="createMenu"
-                 />
-
-            <Button
-                android:id="@+id/viewButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/editButton"
-                android:layout_below="@+id/editButton"
-                android:layout_marginTop="19dp"
-                android:text="@string/view_button"
-                android:onClick="viewMenu"
-                 />
-
-            <Button
-                android:id="@+id/attendanceButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/viewButton"
-                android:layout_below="@+id/viewButton"
-                android:layout_marginTop="22dp"
-                android:text="@string/attendance_button"
-                android:onClick="onClick"
-                 />
-
-            <Button
-                android:id="@+id/editButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/createButton"
-                android:layout_below="@+id/createButton"
-                android:layout_marginTop="18dp"
-                android:text="@string/edit_button"
-                android:onClick="editMenu" />
+                android:text="Add New Classlist"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#000000"
+                android:textSize="40sp" />
 
             <ImageButton
                 android:id="@+id/imageButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/attendanceButton"
-                android:layout_below="@+id/attendanceButton"
-                android:layout_marginLeft="48dp"
-                android:layout_marginTop="50dp"
-                android:src="@drawable/add" 
-                android:onClick="createMenu"
-                />
+                android:layout_above="@+id/imageButton6"
+                android:layout_marginBottom="24dp"
+                android:layout_toLeftOf="@+id/textView2"
+                android:background="#FFFFFF"
+                android:src="@drawable/addnew" />
 
             <ImageButton
                 android:id="@+id/imageButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignTop="@+id/imageButton1"
-                android:layout_marginLeft="37dp"
-                android:layout_toRightOf="@+id/imageButton1"
-                android:src="@drawable/view"
+                android:layout_alignLeft="@+id/imageButton6"
+                android:layout_below="@+id/imageButton6"
+                android:layout_marginTop="35dp"
+                android:background="#FFFFFF"
                 android:onClick="viewMenu"
-                 />
+                android:src="@drawable/main_icon" />
 
-            <ImageButton
-                android:id="@+id/imageButton3"
+            <TextView
+                android:id="@+id/TextView02"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageButton2"
+                android:layout_alignLeft="@+id/textView2"
+                android:layout_marginBottom="37dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="viewMenu"
+                android:text="View Classlists"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#000000"
+                android:textSize="40sp" />
+
+            <TextView
+                android:id="@+id/tw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@+id/TextView01"
                 android:layout_alignLeft="@+id/imageButton1"
-                android:layout_below="@+id/imageButton1"
-                android:layout_marginTop="54dp"
-                android:src="@drawable/check" 
-                android:onClick="takeAttendance"
-                />
-
-            <ImageButton
-                android:id="@+id/imageButton4"
-                android:contentDescription="Edit Menu"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/imageButton2"
-                android:layout_alignTop="@+id/imageButton3"
-                android:src="@drawable/pencil" 
-                android:onClick="editMenu"
-                />
-
-            <ImageButton
-                android:id="@+id/imageButton5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/imageButton2"
-                android:layout_alignTop="@+id/editButton"
-                android:layout_marginTop="23dp"
-                android:src="@drawable/tools"
-                android:onClick="debug"
-                 />
+                android:layout_marginBottom="60dp"
+                android:text="Application Name Here"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#000000"
+                android:fontFamily=""
+                android:textSize="50sp" />
 
         </RelativeLayout>
-    
-
 
 </FrameLayout>

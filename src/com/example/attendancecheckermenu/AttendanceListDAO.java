@@ -184,7 +184,7 @@ public class AttendanceListDAO {
 		ContentValues cv = new ContentValues();
 		cv.put(AttendanceDbHelper.COL_HAS_TAKEN_PICTURE, "false");
 		
-		db.update(AttendanceDbHelper.DB_TABLE_CLASS_NAME, cv, 
+		db.update(AttendanceDbHelper.DB_TABLE_CLASS_LIST, cv, 
 				AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"' and "+
 				AttendanceDbHelper.COL_STDNAME+" = '"+student+"'"
 				, null);
@@ -239,6 +239,27 @@ public class AttendanceListDAO {
 		
 		c.close();
 		return ClassList;
+		
+	}
+
+	public void addAbsent(String studentName, String className, int num) {
+		// TODO Auto-generated method stub
+		String[] numAbsent = {AttendanceDbHelper.COL_NUM_ABSENCES};
+		Cursor c = db.query(true, AttendanceDbHelper.DB_TABLE_CLASS_LIST, numAbsent, 
+				AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"' and "+
+				AttendanceDbHelper.COL_STDNAME+" = '"+studentName+"'",
+				null, null, null, null, null);
+		
+		c.moveToFirst();
+		
+		int new_absent = c.getInt(0)+num;
+		
+		ContentValues cv = new ContentValues();
+		cv.put(AttendanceDbHelper.COL_NUM_ABSENCES, new_absent);
+		db.update(AttendanceDbHelper.DB_TABLE_CLASS_LIST, cv, 
+				AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"' and "+
+				AttendanceDbHelper.COL_STDNAME+" = '"+studentName+"'"
+				, null);
 		
 	}
 }

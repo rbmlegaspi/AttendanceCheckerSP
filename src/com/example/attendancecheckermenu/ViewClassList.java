@@ -13,12 +13,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.SQLException;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -27,221 +32,63 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ViewClassList extends Activity {
+public class ViewClassList extends Activity implements ViewSectionFragment.GetCN{
 
-	ArrayList<String> class_names = new ArrayList<String>();
-	ArrayList<ClassName> classNameArray;
-	String selectedClassName;
-	String selectedFilename;
-	Dialog dialog;
-	AttendanceClassNameDAO acnd;
-	@Override
+	String className;
+	ViewSectionFragment fragment;
+	ViewDateFragment dFragment;
+
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        setContentView(R.layout.activity_view_class_list);
-
-    	final ListView list = (ListView) findViewById(R.id.classListView);
-    	AttendanceClassNameDAO ald = new AttendanceClassNameDAO(ViewClassList.this);
-    	
-        
-        ald.open();
-        
-        classNameArray = ald.viewAllClasses();
-        for (int i = 0; i < classNameArray.size(); i++) {
-			ClassName classObj = classNameArray.get(i);
-			String listItem = classObj.getClassName();
-			class_names.add(listItem);
-			
-		}
-    	
-        ald.close();
-        ArrayAdapter<String> adapterForClassList = new ArrayAdapter<String>(ViewClassList.this, android.R.layout.simple_list_item_1, class_names);
-        list.setAdapter(adapterForClassList);
-        list.setOnItemClickListener(
-            	new AdapterView.OnItemClickListener() {
-            		ArrayAdapter<String> adapterForFileNames;
-            		File[] listFilename;
-            		ArrayList<String> filename_list = new ArrayList<String>();
-            		String prevFilePath;
-        			File file = Environment.getExternalStorageDirectory();
-            		
-        			
-        			public void onItemClick(AdapterView<?> parent,View view, int position,long id)
-            		{
-            			AlertDialog.Builder builder = new AlertDialog.Builder(ViewClassList.this);
-            			builder.setTitle("Select File");
-
-            			ListView modeList = new ListView(ViewClassList.this);
-            		
-            			selectedClassName = (String) (list.getItemAtPosition(position));
-            			
-            			acnd = new AttendanceClassNameDAO(ViewClassList.this);
-            			acnd.open();
-            			boolean hasClassList = acnd.hasClassList(selectedClassName);
-            			acnd.close();
-            			if(hasClassList==false){
-                  			filename_list.clear();
-                			prevFilePath = file.getAbsolutePath();
-                	        this.listFilename = file.listFiles();
-                	    	
-                	        for (File filenameItem : listFilename) {
-                	        	filename_list.add(filenameItem.getAbsolutePath());
-                			}
-                	        
-                	        adapterForFileNames = new ArrayAdapter<String>(ViewClassList.this, android.R.layout.simple_list_item_1, filename_list);
-                	        modeList.setAdapter(adapterForFileNames);
-                			
-                			builder.setView(modeList).setNeutralButton("Back to one directory", 
-                					new DialogInterface.OnClickListener() {
-    									
-    									@Override
-    									public void onClick(DialogInterface dialog, int which) {
-    										
-    									}
-    								}
-                			);
-                			modeList.getId();
-                		
-                			
-                			dialog = builder.create();
-                			dialog.show();
-                			((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEUTRAL).setOnClickListener(new View.OnClickListener(){
-
-    							@Override
-    							public void onClick(View view) {
-    								// TODO Auto-generated method stub
-    								if(!prevFilePath.equals(file.getAbsoluteFile()))
-    								{
-    									File filepath = new File(prevFilePath);
-    									listFilename = filepath.listFiles();
-    			        				filename_list.clear();
-    			        				for (File filenameItem :listFilename) {
-    			        					filename_list.add(filenameItem.getAbsolutePath());
-    									}
-    			        				adapterForFileNames.notifyDataSetChanged();
-    								}
-    								else{
-    									Toast.makeText(ViewClassList.this, "Root director", Toast.LENGTH_SHORT).show();
-    								}
-    							}
-                				
-                			});
-                			
-                			modeList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-    							@Override
-    							public void onItemClick(AdapterView<?> parent,
-    									View view, int position, long id) {
-    								
-    								String filePath = (String) parent.getItemAtPosition(position);
-    			        			File selectedFile = new File(filePath);
-    			        			if(selectedFile.isDirectory())
-    			        			{
-    			        				listFilename = selectedFile.listFiles();
-    			        				filename_list.clear();
-    			        				for (File filenameItem :listFilename) {
-    			        					filename_list.add(filenameItem.getAbsolutePath());
-    									}
-    			        				adapterForFileNames.notifyDataSetChanged();
-    			        				Toast.makeText(getApplicationContext(), "Directory",Toast.LENGTH_LONG).show();
-    									
-    			        			}
-    			        			else if(selectedFile.getPath().substring(selectedFile.getPath().lastIndexOf(".")).equals(".csv")){
-    			        				//if csv file
-    			        				ViewClassList.this.selectedFilename = selectedFile.getPath();
-    			        				new loadCsvContent().execute("");
-    			        				acnd.open();
-    			        				acnd.setClassListToTrue(selectedClassName);
-    			        				acnd.close();
-    			        			}
-    
-    							}
-    						});
-
-            			}else{
-            				//viewMenu
-            				Log.d("ViewClassList","Has classlist");
-            			}
-            			
-  
-            		}
-    			}
-            );
-        
+		className = "CMSC 125 s";
+//		className = getIntent().getExtras().getString("Class Name");
+		
+		setContentView(R.layout.activity_view_class_list);
+		
+		
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+		
+		
+		fragment = new ViewSectionFragment();
+		dFragment = new ViewDateFragment();
+		Bundle args = new Bundle();
+		args.putString("className", className);
+		fragmentTransaction.add(R.id.fragLayout	, fragment);
+		fragmentTransaction.commit();
 	}
 	
-	public class loadCsvContent extends AsyncTask<String, Integer, String>{
-
-		ProgressDialog pd;
-		int classSize;
-		protected void onPreExecute(){
-			acnd.open();
-			classSize = acnd.getClassSizeFromDb(selectedClassName);
-			acnd.close();
-			pd = new ProgressDialog(ViewClassList.this);
-			pd.setTitle("Reading CSV file");
-			pd.setMessage("Please wait");
-			pd.setMax(classSize);
-			pd.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			pd.setIndeterminate(false);
-			pd.show();
-		
-		}
-		
-		@Override
-		protected String doInBackground(String... params){
-		//	Log.d("ViewClassList",selectedFilename);
-			//Toast.makeText(ViewClassList.this, selectedFilename, Toast.LENGTH_LONG).show();
-			// TODO Auto-generated method stub
-			FileReader fr;
-			try {
-				fr = new FileReader(selectedFilename);
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				fr = null;
-				e.printStackTrace();
-			}
-			CSVReader reader = new CSVReader(fr);
-			
-			
-			String[] nextLine;
-			AttendanceListDAO ald = new AttendanceListDAO(ViewClassList.this);
-			ald.open();
-			try {
-				while ((nextLine = reader.readNext()) != null) {
-					ald.insertClassListToDb(nextLine[0], nextLine[1],selectedClassName,nextLine[2],nextLine[3]);
-					pd.incrementProgressBy(1);
-					Thread.sleep(100);
-					
-				}
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			pd.dismiss();
-			dialog.dismiss();
-			ald.close();
-			return null;
-		}
-		
-		protected void onProgressUpdate(Integer... progress){
-			publishProgress(progress);
-		}
-		
-		protected void onPostExecute(){
-			
-		}
-		
-		
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.attendance_view_switch, menu);
+	    return super.onCreateOptionsMenu(menu);
 	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle presses on the action bar items
+		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+    	
+		switch (item.getItemId()) {
+	        case R.id.view_by_students:
+	    		fragmentTransaction.replace(R.id.fragLayout	,fragment);
+	    		fragmentTransaction.remove(dFragment);
+	    		fragmentTransaction.commit();
+	        	return true;
+	        case R.id.view_by_date:
+	        	fragmentTransaction.replace(R.id.fragLayout	, dFragment);
+	        	fragmentTransaction.remove(fragment);
+	    		fragmentTransaction.commit();
+	        	return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+	
+	public String getClassName(){
+		return this.className;
+	}
+	
 }

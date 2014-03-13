@@ -1,6 +1,8 @@
 package com.example.attendancecheckermenu;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 
 
 import java.io.File;
@@ -13,6 +15,9 @@ import java.util.HashMap;
 import android.os.*;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnClickListener;
@@ -61,8 +66,8 @@ public class MainActivity extends Activity {
     setContentView(R.layout.cam_app);
     //text = (EditText) findViewById(R.id.editText1);
     inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    getActionBar().setDisplayHomeAsUpEnabled(true);
     gridview = (GridView) findViewById(R.id.gridview);
     gridviewButtons = (GridView) findViewById(R.id.pictureGallery);
     ald = new AttendanceListDAO(getApplicationContext());
@@ -125,6 +130,8 @@ public class MainActivity extends Activity {
     	    SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yy hh:mm:ss");
     	    String date = dateFormat.format(new Date());
     	    String photoFile = classListArrayTemp.get(position)+" "+ date + ".jpg";
+    	    SimpleDateFormat dateFormatmdy = new SimpleDateFormat("MM-dd-yy");
+    	    String date2 = dateFormat.format(new Date());
     	    String filename = pictureFileDir.getPath() + File.separator + photoFile;
     	    File pictureFile = new File(filename);
     	    ImageView img = (ImageView) v.findViewById(R.id.grid_item_image);
@@ -133,7 +140,7 @@ public class MainActivity extends Activity {
             Log.d("MainActivity",studentNumber);
 //    	    mCamera.takePicture(null, null, new PhotoHandler(getApplicationContext(),filename,pictureFile,img,txt,pictureArrayTemp,classListArrayTemp,position,mCamera,gridview,imgAdapter));
     	 
-            mCamera.takePicture(null, null, new PhotoHandler(getApplicationContext(),filename,studentNumber,className, pictureFile,date, img,txt,pictureArrayTemp,classListArrayTemp,position,mCamera,gridview));
+            mCamera.takePicture(null, null, new PhotoHandler(getApplicationContext(),filename,studentNumber,className, pictureFile,date2, img,txt,pictureArrayTemp,classListArrayTemp,position,mCamera,gridview));
     	}
     });
     
@@ -153,10 +160,14 @@ public class MainActivity extends Activity {
 	  
 	  for (ClassList cl : classList) {
 		if(cl.hasPictureTakenM()){
-//			Log.d("MainActivity",cl.getStudentName()+" is present");
 		}	
 		else{
 	//		Log.d("MainActivity",cl.getStudentName()+" is absent");
+			
+			AttendanceListDAO ald = new AttendanceListDAO(getApplicationContext());
+			ald.open();
+			ald.addAbsent(cl.getStudentName(),className,1);
+			ald.close();
 			PhotoDAO pd = new PhotoDAO(getApplicationContext());
 			pd.open();
 			pd.insertPhotoToDb("no picture", cl.getStudentNumber(), cl.getStudentName(), dateTaken, className);			
@@ -168,6 +179,43 @@ public class MainActivity extends Activity {
 	  ald.close();
 	  finish();
   }
+  
+  public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.action_bar_attendance, menu);
+	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle presses on the action bar items
+		
+		switch (item.getItemId()) {
+	        case R.id.finish_attendance_op:
+	        	AlertDialog.Builder builder = new AlertDialog.Builder(this);
+	        	builder.setMessage("Do you want to finish checking the attendance?");
+	        	builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						// TODO Auto-generated method stub
+						finishAttendance(null);
+						
+					}
+				});
+	        	builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {
+						// TODO Auto-generated method stub
+					}
+				});
+	        	
+	        	AlertDialog dialog = builder.create();
+	        	dialog.show();
+	        	return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
   
   private File getDir() {
 	    File sdDir = Environment

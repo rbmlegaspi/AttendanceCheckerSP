@@ -24,6 +24,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
@@ -55,9 +58,8 @@ public class FullscreenActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN);
+//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+  //          WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	
         int n = Camera.getNumberOfCameras();
 		for(int i=0;i<n;i++){
@@ -237,8 +239,8 @@ public class FullscreenActivity extends Activity {
 	
 	public void editMenu(View view)
 	{
-		Intent intent = new Intent(this, FileManager.class);
-		startActivity(intent);
+	//	Intent intent = new Intent(this, FileManager.class);
+	//	startActivity(intent);
 	}
 	
 	public void takeAttendance(View view){
@@ -283,6 +285,30 @@ public class FullscreenActivity extends Activity {
 		dialog.show();
 		
 	}
+	
+	public boolean onCreateOptionsMenu(Menu menu) {
+	    // Inflate the menu items for use in the action bar
+	    MenuInflater inflater = getMenuInflater();
+	    inflater.inflate(R.menu.action_bar, menu);
+	    return super.onCreateOptionsMenu(menu);
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    // Handle presses on the action bar items
+	    switch (item.getItemId()) {
+	        case R.id.addNewClassList:
+	        	Intent intent = new Intent(this, ViewClassList.class);
+	    		startActivity(intent);
+	            return true;
+	        case R.id.viewClassList:
+	        	viewMenu(null);
+	        	return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}
+
+	
 	
 	public void debug(View view)
 	{

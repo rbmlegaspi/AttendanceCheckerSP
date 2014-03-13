@@ -34,61 +34,80 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
     }
     public static final class drawable {
         public static final int add=0x7f020000;
-        public static final int addx=0x7f020001;
-        public static final int check=0x7f020002;
-        public static final int ic_launcher=0x7f020003;
-        public static final int pencil=0x7f020004;
-        public static final int tools=0x7f020005;
-        public static final int view=0x7f020006;
+        public static final int addnew=0x7f020001;
+        public static final int addx=0x7f020002;
+        public static final int border_menu_item=0x7f020003;
+        public static final int cchk=0x7f020004;
+        public static final int check=0x7f020005;
+        public static final int ic_action_accept=0x7f020006;
+        public static final int ic_action_add_group=0x7f020007;
+        public static final int ic_action_edit=0x7f020008;
+        public static final int ic_action_overflow=0x7f020009;
+        public static final int ic_action_view_as_grid=0x7f02000a;
+        public static final int ic_action_view_as_list=0x7f02000b;
+        public static final int ic_launcher=0x7f02000c;
+        public static final int main_icon=0x7f02000d;
+        public static final int pencil=0x7f02000e;
+        public static final int takea=0x7f02000f;
+        public static final int tools=0x7f020010;
+        public static final int view=0x7f020011;
     }
     public static final class id {
-        public static final int StudentName=0x7f09001d;
-        public static final int StudentNameItem=0x7f09002a;
+        public static final int StudentName=0x7f09001b;
+        public static final int StudentNameItem=0x7f090029;
         public static final int StudentNumItem=0x7f090003;
-        public static final int StudentNumber=0x7f09001f;
-        public static final int action_settings=0x7f09002e;
-        public static final int attendanceButton=0x7f090014;
-        public static final int attendancePicture=0x7f090028;
-        public static final int button2=0x7f09001a;
-        public static final int camera_preview=0x7f090026;
+        public static final int StudentNumber=0x7f09001d;
+        public static final int TextView01=0x7f090013;
+        public static final int TextView02=0x7f090016;
+        public static final int action_settings=0x7f090036;
+        public static final int addNewClassList=0x7f090031;
+        public static final int attendancePicture=0x7f090027;
+        public static final int button2=0x7f090018;
+        public static final int camera_preview=0x7f090025;
         public static final int classList=0x7f090023;
-        public static final int classListView=0x7f090022;
+        public static final int classListDate=0x7f09002f;
         public static final int className=0x7f090002;
-        public static final int createButton=0x7f090011;
-        public static final int date=0x7f090029;
-        public static final int editButton=0x7f090013;
-        public static final int excessiveField=0x7f090021;
+        public static final int date=0x7f090028;
+        public static final int dateofclass=0x7f090030;
+        public static final int excessiveField=0x7f09001f;
         public static final int finishAttendance=0x7f09000f;
+        public static final int finish_attendance_op=0x7f090033;
+        public static final int frag1=0x7f090021;
+        public static final int frag2=0x7f090022;
+        public static final int fragLayout=0x7f090020;
         public static final int fullscreen_content=0x7f090010;
-        public static final int grid_item_image=0x7f09002d;
-        public static final int grid_item_label=0x7f09002b;
-        public static final int gridview=0x7f090027;
-        public static final int imageButton1=0x7f090015;
-        public static final int imageButton2=0x7f090016;
-        public static final int imageButton3=0x7f090017;
-        public static final int imageButton4=0x7f090018;
-        public static final int imageButton5=0x7f090019;
-        public static final int label=0x7f09002c;
+        public static final int grid_item_image=0x7f09002b;
+        public static final int grid_item_label=0x7f09002c;
+        public static final int gridview=0x7f090026;
+        public static final int imageButton1=0x7f090014;
+        public static final int imageButton2=0x7f090015;
+        public static final int imageButton6=0x7f090012;
+        public static final int label=0x7f09002d;
         public static final int lecturer=0x7f090009;
         public static final int listView1=0x7f09000e;
-        public static final int numOfAbsences=0x7f09001e;
+        public static final int numOfAbsences=0x7f09001c;
         public static final int numOfAbsencesVal=0x7f09000a;
         public static final int numStud=0x7f09000c;
-        public static final int origPic=0x7f090020;
-        public static final int pictureGallery=0x7f09001c;
-        public static final int relativeLayout1=0x7f09001b;
-        public static final int relay=0x7f090025;
+        public static final int origPic=0x7f09001e;
+        public static final int pictureGallery=0x7f09001a;
+        public static final int relativeLayout1=0x7f090019;
+        public static final int relay=0x7f090024;
         public static final int sa1=0x7f090008;
         public static final int sa2=0x7f09000b;
         public static final int sa3=0x7f090005;
         public static final int saveButton=0x7f090004;
         public static final int scrollView1=0x7f090000;
         public static final int sectionText=0x7f090001;
-        public static final int textView10=0x7f090024;
+        public static final int student_pic=0x7f09002a;
+        public static final int textView2=0x7f090011;
         public static final int textView3=0x7f09000d;
         public static final int textView5=0x7f090007;
         public static final int textView6=0x7f090006;
-        public static final int viewButton=0x7f090012;
+        public static final int tw=0x7f090017;
+        public static final int viewClassList=0x7f090032;
+        public static final int viewG=0x7f09002e;
+        public static final int view_by_date=0x7f090034;
+        public static final int view_by_students=0x7f090035;
     }
     public static final class layout {
         public static final int activity_create_menu=0x7f030000;
@@ -103,16 +122,23 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int list_button_text=0x7f030009;
         public static final int list_item_student=0x7f03000a;
         public static final int mobile=0x7f03000b;
+        public static final int view_by_class_date=0x7f03000c;
+        public static final int view_menu=0x7f03000d;
     }
     public static final class menu {
-        public static final int file_manager=0x7f080000;
-        public static final int main=0x7f080001;
-        public static final int student_info_screen=0x7f080002;
-        public static final int view_class_list=0x7f080003;
-        public static final int view_section=0x7f080004;
+        public static final int action_bar=0x7f080000;
+        public static final int action_bar_attendance=0x7f080001;
+        public static final int attendance_view_switch=0x7f080002;
+        public static final int file_manager=0x7f080003;
+        public static final int main=0x7f080004;
+        public static final int student_info_screen=0x7f080005;
+        public static final int view_class_list=0x7f080006;
+        public static final int view_section=0x7f080007;
     }
     public static final class string {
         public static final int action_settings=0x7f06000d;
+        public static final int addNewClassList=0x7f060013;
+        public static final int add_short=0x7f060014;
         public static final int app_name=0x7f060000;
         public static final int attendance_button=0x7f060006;
         public static final int create_button=0x7f060003;
@@ -130,6 +156,8 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int title_activity_student_info_screen=0x7f060012;
         public static final int title_activity_view_class_list=0x7f06000c;
         public static final int title_activity_view_section=0x7f060011;
+        public static final int viewClassList=0x7f060015;
+        public static final int viewShort=0x7f060016;
         public static final int view_button=0x7f060005;
     }
     public static final class style {

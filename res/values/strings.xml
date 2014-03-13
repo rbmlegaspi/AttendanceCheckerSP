@@ -20,5 +20,9 @@
     <string name="title_activity_file_manager">FileManager</string>
     <string name="title_activity_view_section">ViewSection</string>
     <string name="title_activity_student_info_screen">StudentInfoScreen</string>
+    <string name="addNewClassList">Add New ClassList</string>
+    <string name="add_short">Add</string>
+    <string name="viewClassList">View Classlist</string>
+    <string name="viewShort">View</string>
 
 </resources>

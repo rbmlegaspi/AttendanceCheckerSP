@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:id="@+id/view_by_date" android:titleCondensed="View by Date" android:title="View by Date"></item>
+    <item android:id="@+id/view_by_students" android:titleCondensed="Student View" android:title="View Student List"></item>
+    
+
+</menu>
