@@ -242,9 +242,13 @@ public class AttendanceListDAO {
 		
 	}
 
-	public void addAbsent(String studentName, String className, int num) {
+	public ContentValues addAbsent(String studentName, String className, int num) {
 		// TODO Auto-generated method stub
-		String[] numAbsent = {AttendanceDbHelper.COL_NUM_ABSENCES};
+		String[] numAbsent = {
+				AttendanceDbHelper.COL_NUM_ABSENCES,
+				AttendanceDbHelper.COL_EXCESSIVE
+		
+		};
 		Cursor c = db.query(true, AttendanceDbHelper.DB_TABLE_CLASS_LIST, numAbsent, 
 				AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"' and "+
 				AttendanceDbHelper.COL_STDNAME+" = '"+studentName+"'",
@@ -253,13 +257,30 @@ public class AttendanceListDAO {
 		c.moveToFirst();
 		
 		int new_absent = c.getInt(0)+num;
-		
+		boolean excessive = Boolean.parseBoolean(c.getString(1));
 		ContentValues cv = new ContentValues();
+		ContentValues cvret = new ContentValues();
 		cv.put(AttendanceDbHelper.COL_NUM_ABSENCES, new_absent);
+		if(new_absent>7){
+			excessive = true;
+			cv.put(AttendanceDbHelper.COL_EXCESSIVE, excessive);
+		}
+		else if(new_absent<=7){
+			excessive = false;
+			cv.put(AttendanceDbHelper.COL_EXCESSIVE, excessive);
+		}
+		
 		db.update(AttendanceDbHelper.DB_TABLE_CLASS_LIST, cv, 
 				AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"' and "+
 				AttendanceDbHelper.COL_STDNAME+" = '"+studentName+"'"
 				, null);
 		
+
+		cvret.put("excessive",excessive);
+		cvret.put("numAbsent",new_absent);
+		
+		return cvret;
+		
 	}
+	
 }

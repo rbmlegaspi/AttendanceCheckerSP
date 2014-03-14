@@ -39,7 +39,7 @@ public class ViewSection extends Activity {
 		
 		
 		AttendanceListDAO ald = new AttendanceListDAO(getApplicationContext());
-		studentList = (ListView) findViewById(R.id.classList);
+		studentList = (ListView) findViewById(R.id.classListGrid);
 	//	TextView tv = (TextView) findViewById(R.id.textView10);
 	//	tv.setText(className);
         ald.open();

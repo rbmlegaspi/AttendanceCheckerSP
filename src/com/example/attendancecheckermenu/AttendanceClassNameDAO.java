@@ -62,13 +62,13 @@ public class AttendanceClassNameDAO {
 	public void dropDebug()
 	{
 		db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_CLASS_NAME);
-		db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_CLASS_LIST);
 		db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_PASSWORD);
 		db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_PICDB);
 	}
 	
 	public void dropAndCreateClassListDebug(){
-		db.execSQL("DROP TABLE IF EXISTS "+AttendanceDbHelper.DB_TABLE_PICDB);
+		db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_CLASS_LIST);
+		db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_PICDB);
 		db.execSQL("CREATE TABLE "+AttendanceDbHelper.DB_TABLE_PICDB+" ("
 				+ AttendanceDbHelper.COL_PICTURE_LOCAL_PATH +" TEXT NOT NULL,"
 				+ AttendanceDbHelper.COL_PICTURE_STDNUM +" TEXT NOT NULL,"
@@ -76,10 +76,9 @@ public class AttendanceClassNameDAO {
 				+ AttendanceDbHelper.COL_PICTURE_DATE_TAKEN +" TEXT NOT NULL,"
 				+ AttendanceDbHelper.COL_PICTURE_CLASS_NAME +" TEXT NOT NULL"
 				+ ");"
-		);
-		/*db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_CLASS_LIST);
+			);
 		db.execSQL("CREATE TABLE "+AttendanceDbHelper.DB_TABLE_CLASS_LIST+" ("
-				+ AttendanceDbHelper.COL_STDNUM +" TEXT PRIMARY KEY,"
+				+ AttendanceDbHelper.COL_STDNUM +" TEXT NOT NULL,"
 				+ AttendanceDbHelper.COL_STDNAME+" INTEGER NOT NULL,"
 				+ AttendanceDbHelper.COL_CLASS_NAME + " TEXT NOT NULL,"
 				+ AttendanceDbHelper.COL_LEC_SECTION+" TEXT NOT NULL,"
@@ -88,9 +87,10 @@ public class AttendanceClassNameDAO {
 				+ AttendanceDbHelper.COL_NUM_ABSENCES + " TEXT NOT NULL,"
 				+ AttendanceDbHelper.COL_EXCESSIVE + " TEXT NOT NULL,"
 				+ AttendanceDbHelper.COL_DATES_ABSENT + " TEXT NOT NULL,"
-				+ AttendanceDbHelper.COL_HAS_TAKEN_PICTURE + " TEXT NOT NULL"
+				+ AttendanceDbHelper.COL_HAS_TAKEN_PICTURE + " TEXT NOT NULL,"
+				+ AttendanceDbHelper.COL_ID+" INTEGER PRIMARY KEY AUTOINCREMENT "
 				+ ");"
-		);*/
+		);
 	}
 	
 	public void createTableDebug()
@@ -121,7 +121,7 @@ public class AttendanceClassNameDAO {
 		db.execSQL("CREATE TABLE "+AttendanceDbHelper.DB_TABLE_PICDB+" ("
 				+ AttendanceDbHelper.COL_PICTURE_LOCAL_PATH +" TEXT NOT NULL,"
 				+ AttendanceDbHelper.COL_PICTURE_STDNUM +" TEXT NOT NULL,"
-				+AttendanceDbHelper.COL_PICTURE_DATE_TAKEN +" TEXT NOT NULL"
+				+ AttendanceDbHelper.COL_PICTURE_DATE_TAKEN +" TEXT NOT NULL"
 				+ ");"
 		);
 		
@@ -155,11 +155,11 @@ public class AttendanceClassNameDAO {
 		
 	}
 	
-	public void setClassListToFalse(String className){
+	public void setClassListToFalse(){
 		
 		ContentValues cv = new ContentValues();
 		cv.put(AttendanceDbHelper.COL_HAS_CLASS_LIST, "false");
-		db.update(AttendanceDbHelper.DB_TABLE_CLASS_NAME, cv, AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"'", null);
+		db.update(AttendanceDbHelper.DB_TABLE_CLASS_NAME, cv, null, null);
 		
 	}
 	

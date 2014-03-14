@@ -10,9 +10,11 @@ import java.util.ArrayList;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.database.SQLException;
@@ -125,7 +127,6 @@ public class FullscreenActivity extends Activity {
             			ListView llist = new ListView(FullscreenActivity.this);
             			
             			selectedClassName = (String) (modeList.getItemAtPosition(position));
-            			Log.d("FullscreenActivity",selectedClassName);
             			
             			acnd = new AttendanceClassNameDAO(FullscreenActivity.this);
             			acnd.open();
@@ -232,8 +233,8 @@ public class FullscreenActivity extends Activity {
 	}
 	
 	public void viewClassList(){
-		Intent intent = new Intent(FullscreenActivity.this,ViewSection.class);
-		intent.putExtra("Class Name", selectedClassName);
+		Intent intent = new Intent(FullscreenActivity.this,ViewClassList.class);
+		intent.putExtra("className", selectedClassName);
 		startActivity(intent);
 	}
 	
@@ -270,13 +271,38 @@ public class FullscreenActivity extends Activity {
 		modeList.setAdapter(adapterForClassNames);
 		modeList.setOnItemClickListener(
         	new AdapterView.OnItemClickListener() {
+        		
+        		Dialog d;
         		public void onItemClick(AdapterView<?> parent,View view, int position,long id)
         		{
         			selectedClassName = (String) (modeList.getItemAtPosition(position));
         			
-        			Intent intent = new Intent(FullscreenActivity.this, MainActivity.class);
-        			intent.putExtra("Class Name",selectedClassName);
-        			startActivity(intent);
+        			acnd = new AttendanceClassNameDAO(FullscreenActivity.this);
+        			acnd.open();
+        			boolean hasClassList = acnd.hasClassList(selectedClassName);
+        			acnd.close();
+        			
+        			if(hasClassList){
+		    			Intent intent = new Intent(FullscreenActivity.this, MainActivity.class);
+		    			intent.putExtra("Class Name",selectedClassName);
+		    			startActivity(intent);
+        			}
+        			else{
+        				AlertDialog.Builder bd = new AlertDialog.Builder(FullscreenActivity.this);
+        				bd.setTitle("No classlist found");
+        				bd.setMessage("No classlist found. Please upload one in the View Classlist menu");
+        				bd.setNeutralButton("Ok", new OnClickListener() {
+							
+							@Override
+							public void onClick(DialogInterface arg0, int arg1) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
+        				dialog = bd.create();
+        				dialog.show();
+        			}
+        			
         		}
         			
         	});
@@ -297,9 +323,8 @@ public class FullscreenActivity extends Activity {
 	    // Handle presses on the action bar items
 	    switch (item.getItemId()) {
 	        case R.id.addNewClassList:
-	        	Intent intent = new Intent(this, ViewClassList.class);
-	    		startActivity(intent);
-	            return true;
+	        	createMenu(null);
+	        	return true;
 	        case R.id.viewClassList:
 	        	viewMenu(null);
 	        	return true;
@@ -315,24 +340,9 @@ public class FullscreenActivity extends Activity {
 		
 		AttendanceClassNameDAO acnd = new AttendanceClassNameDAO(getApplicationContext());
 		acnd.open();
-//		acnd.setClassListToTrue("CMSC 125 s");
-//		acnd.dropAndCreateClassListDebug();
+		//acnd.setClassListToFalse();
+		//acnd.dropAndCreateClassListDebug();
 		acnd.close();
-		
-		/*
-		PhotoDAO pd = new PhotoDAO(getApplicationContext());
-		pd.open();
-		
-		ArrayList<Photo> photo = pd.getAllPhotosFromClass("CMSC 125 s");
-		
-		for (Photo p : photo) {
-			Log.d("FullscreenActivity","Path of file "+p.getPathOfFile());
-			Log.d("FullscreenActivity","Student Name "+p.getStdName());
-			Log.d("FullscreenActivity","Date Taken "+p.getDateTaken());	
-		}
-		
-		pd.close();
-		*/
 	}
 	
 	public class loadCsvContent extends AsyncTask<String, Integer, String>{

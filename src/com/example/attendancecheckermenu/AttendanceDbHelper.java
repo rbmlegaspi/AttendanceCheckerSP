@@ -43,6 +43,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper{
 	public static final String COL_PICTURE_STDNAME = "PICTURE_STDNAME";
 	public static final String COL_PICTURE_DATE_TAKEN = "DATE_TAKEN";
 	public static final String COL_PICTURE_CLASS_NAME = "CLASS_NAME";
+	public static final String COL_ID = "ID";
 	
 	
 	Context c;

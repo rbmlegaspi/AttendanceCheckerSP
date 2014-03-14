@@ -36,7 +36,7 @@ public class FileManager extends Activity {
             WindowManager.LayoutParams.FLAG_FULLSCREEN);
         
         setContentView(R.layout.activity_file_manager);
-    	ListView listView = (ListView) findViewById(R.id.listView1);        
+    	ListView listView = (ListView) findViewById(R.id.dateList);        
 
     	File file = Environment.getExternalStorageDirectory();
         this.list = file.listFiles();

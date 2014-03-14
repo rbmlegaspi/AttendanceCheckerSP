@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory.Options;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,9 +69,9 @@ public class PictureAdapter extends BaseAdapter{
 				
 				if(pathName.get(position).equals("no picture")) imageView.setImageBitmap(bmp);
 				else {
-					Bitmap bitmap = BitmapFactory.decodeFile(pathName.get(position));
-					bitmap = Bitmap.createScaledBitmap(bitmap, 400, 300, false);
-					imageView.setImageBitmap(bitmap);
+	    	    	Options opts = new Options();
+	    	    	opts.inSampleSize = 4;
+					Bitmap bitmap = BitmapFactory.decodeFile(pathName.get(position),opts);
 					
 				}
 
@@ -86,8 +87,9 @@ public class PictureAdapter extends BaseAdapter{
 			
 			if(pathName.get(position).equals("no picture")) imageView.setImageBitmap(bmp);
 			else {
-				Bitmap bitmap = BitmapFactory.decodeFile(pathName.get(position));
-				bitmap = Bitmap.createScaledBitmap(bitmap, 400, 300, false);
+    	    	Options opts = new Options();
+    	    	opts.inSampleSize = 4;
+				Bitmap bitmap = BitmapFactory.decodeFile(pathName.get(position),opts);
 				imageView.setImageBitmap(bitmap);
 				
 			}

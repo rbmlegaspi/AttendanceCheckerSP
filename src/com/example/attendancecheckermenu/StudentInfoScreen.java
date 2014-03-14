@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.ContentValues;
 import android.database.SQLException;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -47,12 +49,13 @@ public class StudentInfoScreen extends Activity {
 		
 		TextView View3 = (TextView) findViewById(R.id.numOfAbsencesVal);
 		View3.setText(cl.getNumOfAbsences()+"");
-				
+
+		TextView tv = (TextView) findViewById(R.id.excessiveField);
+		tv.setText((cl.isExcessive()+""));
 		pd = new PhotoDAO(this);
 		pd.open();
 		
 		photoClassArray = pd.getAllPhotosFromStudent(studentName,className);		
-//		photoClassArray = pd.getAllPhotos();
 		if(photoClassArray.size()>0){
 			for (Photo p : photoClassArray) {
 				dateTaken.add(p.getDateTaken());
@@ -74,4 +77,32 @@ public class StudentInfoScreen extends Activity {
 		return true;
 	}
 
+	public void addAbsent(View view){
+		AttendanceListDAO ald = new AttendanceListDAO(this);
+		ald.open();
+		
+		ContentValues cv = ald.addAbsent(studentName, className, 1);
+		ald.close();
+		
+		TextView tv = (TextView) findViewById(R.id.excessiveField);
+		tv.setText(cv.get("excessive")+"");
+		
+		TextView tv2 = (TextView) findViewById(R.id.numOfAbsencesVal);
+		tv2.setText(cv.get("numAbsent")+"");
+	}
+	
+	public void subAbsent(View view){
+		AttendanceListDAO ald = new AttendanceListDAO(this);
+		ald.open();
+		
+		ContentValues cv = ald.addAbsent(studentName, className, -1);
+		ald.close();
+		
+		TextView tv = (TextView) findViewById(R.id.excessiveField);
+		tv.setText(cv.get("excessive")+"");
+		
+		TextView tv2 = (TextView) findViewById(R.id.numOfAbsencesVal);
+		tv2.setText(cv.get("numAbsent")+"");
+	}
+	
 }

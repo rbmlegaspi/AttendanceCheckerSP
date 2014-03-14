@@ -32,20 +32,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class ViewClassList extends Activity implements ViewSectionFragment.GetCN{
+public class ViewClassList extends Activity implements ViewSectionFragment.GetCN,ViewDateFragment.GetCN{
 
-	String className;
+	private static String className,dateTaken="";
 	ViewSectionFragment fragment;
 	ViewDateFragment dFragment;
+	
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-		className = "CMSC 125 s";
-//		className = getIntent().getExtras().getString("Class Name");
+		className = getIntent().getExtras().getString("className");
 		
 		setContentView(R.layout.activity_view_class_list);
-		
+
 		
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -70,7 +70,7 @@ public class ViewClassList extends Activity implements ViewSectionFragment.GetCN
 	    // Handle presses on the action bar items
 		FragmentManager fragmentManager = getFragmentManager();
 		FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-    	
+    	ArrayList<String> dates = new ArrayList<String>();
 		switch (item.getItemId()) {
 	        case R.id.view_by_students:
 	    		fragmentTransaction.replace(R.id.fragLayout	,fragment);
@@ -89,6 +89,14 @@ public class ViewClassList extends Activity implements ViewSectionFragment.GetCN
 	
 	public String getClassName(){
 		return this.className;
+	}
+	
+	public String getDateTaken(){
+		return this.dateTaken;
+	}
+	
+	public void setDateTaken(String dateTaken){
+		this.dateTaken = dateTaken;
 	}
 	
 }

@@ -31,7 +31,7 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/griditem_stdnum"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageButton6"
@@ -64,7 +64,7 @@
                 android:id="@+id/TextView01"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/textView2"
+                android:layout_alignLeft="@+id/griditem_stdnum"
                 android:layout_alignTop="@+id/imageButton1"
                 android:layout_marginTop="32dp"
                 android:clickable="true"
@@ -81,7 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/imageButton6"
                 android:layout_marginBottom="24dp"
-                android:layout_toLeftOf="@+id/textView2"
+                android:layout_toLeftOf="@+id/griditem_stdnum"
                 android:background="#FFFFFF"
                 android:src="@drawable/addnew" />
 
@@ -101,7 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignBottom="@+id/imageButton2"
-                android:layout_alignLeft="@+id/textView2"
+                android:layout_alignLeft="@+id/griditem_stdnum"
                 android:layout_marginBottom="37dp"
                 android:clickable="true"
                 android:gravity="center"
@@ -118,11 +118,37 @@
                 android:layout_above="@+id/TextView01"
                 android:layout_alignLeft="@+id/imageButton1"
                 android:layout_marginBottom="60dp"
-                android:text="Application Name Here"
+                android:text="Attendance Checker"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000"
                 android:fontFamily=""
                 android:textSize="50sp" />
+
+            <ImageButton
+                android:id="@+id/imageButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageButton2"
+                android:layout_marginTop="31dp"
+                android:layout_toLeftOf="@+id/griditem_stdnum"
+                android:background="#ffffff"
+                android:onClick="debug"
+                android:src="@drawable/set" />
+
+            <TextView
+                android:id="@+id/TextView03"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/imageButton3"
+                android:layout_alignLeft="@+id/TextView02"
+                android:layout_marginBottom="38dp"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="debug"
+                android:text="Settings"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#000000"
+                android:textSize="40sp" />
 
         </RelativeLayout>
 

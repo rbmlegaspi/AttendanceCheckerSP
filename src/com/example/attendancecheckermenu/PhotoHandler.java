@@ -11,6 +11,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
+import android.graphics.BitmapFactory.Options;
 import android.hardware.Camera;
 import android.hardware.Camera.PictureCallback;
 import android.media.ExifInterface;
@@ -65,19 +66,16 @@ public class PhotoHandler implements PictureCallback {
       fos.write(data);
       fos.close();
       Toast.makeText(context, "New Image saved:" + pictureFile.getAbsolutePath(),
-          Toast.LENGTH_LONG).show();
-      
-      Bitmap bitmap = BitmapFactory.decodeFile(pictureFile.getAbsolutePath());
-      bitmap = Bitmap.createScaledBitmap(bitmap, 400, 300, false);
+          Toast.LENGTH_SHORT).show();
+      Options opts = new Options();
+  	  opts.inSampleSize = 4;
+  	  Bitmap bitmap = BitmapFactory.decodeFile(pictureFile.getAbsolutePath(),opts);
       images.set(position, bitmap);
       img.setImageBitmap(bitmap);
       pd = new PhotoDAO(context);
       AttendanceListDAO ald = new AttendanceListDAO(context);
       ald.open();
-      Log.d("MainActivity",studentName.get(position));
       ald.studentTakesPic(className, studentName.get(position));
-      Log.d("MainActivity",ald.getPicTaken(className, studentName.get(position)));
-      
       ald.close();
       pd.open();      
 //    TODO get the student number of the student
@@ -92,16 +90,6 @@ public class PhotoHandler implements PictureCallback {
     }
     
   }
-/*
-  public void setFilename(String filename){
-	  Toast.makeText(context, "New Image saved:" + filename,
-	          Toast.LENGTH_LONG).show();
-	  this.filename = filename;
-  }
-  
-  public String getFilename(){
-	  return this.filename;
-  }*/
   
   private File getDir() {
     File sdDir = Environment

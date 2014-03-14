@@ -42,7 +42,7 @@ public class ViewSectionFragment extends Fragment{
  			tv.setText(className);
 	
  			AttendanceListDAO ald = new AttendanceListDAO(getActivity().getApplicationContext());
- 			studentList = (ListView) v.findViewById(R.id.classList);
+ 			studentList = (ListView) v.findViewById(R.id.classListGrid);
  	        ald.open();
  	        
  	        classListArray = ald.viewClassListFromClass(className);

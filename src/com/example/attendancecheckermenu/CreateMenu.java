@@ -35,7 +35,7 @@ public class CreateMenu extends Activity {
 
 	public void saveClassList(View view)
 	{
-		classNameText = (EditText) findViewById (R.id.className);
+		classNameText = (EditText) findViewById (R.id.classNameFragItem);
 		classNumText = (EditText) findViewById(R.id.numStud);
 		lecText = (EditText) findViewById(R.id.lecturer);
 		sa1Text = (EditText) findViewById(R.id.sa1);

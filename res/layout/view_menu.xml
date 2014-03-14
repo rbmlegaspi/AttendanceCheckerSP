@@ -5,7 +5,7 @@
     android:layout_height="match_parent" >
 
     <TextView
-        android:id="@+id/dateofclass"
+        android:id="@+id/classNameFragItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -13,13 +13,24 @@
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
+    <ListView
+        android:id="@+id/dateList"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/classNameFragItem" >
+    </ListView>
+
     <GridView
-        android:id="@+id/classList"
+        android:id="@+id/classListGrid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/dateofclass"
-        android:numColumns="3" >
+        android:layout_below="@+id/dateList"
+
+        android:numColumns="5"
+        >
 
     </GridView>
 

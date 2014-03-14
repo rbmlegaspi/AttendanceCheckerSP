@@ -25,16 +25,6 @@
             android:text="Large Text"
             android:textSize="50dp" />
 
-        <TextView
-            android:id="@+id/numOfAbsencesVal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/numOfAbsences"
-            android:layout_alignBottom="@+id/numOfAbsences"
-            android:layout_toRightOf="@+id/StudentNumber"
-            android:text="Large Text"
-            android:textAppearance="?android:attr/textAppearanceLarge" />
-
         <ImageView
             android:id="@+id/origPic"
             android:layout_width="wrap_content"
@@ -69,9 +59,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/origPic"
-            android:text="Large Text"
+            android:text="Number of Absences"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textSize="30sp" />
+            android:textSize="25sp" />
 
         <TextView
             android:id="@+id/excessiveField"
@@ -82,6 +72,34 @@
             android:layout_marginTop="16dp"
             android:text="Medium Text"
             android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:id="@+id/numOfAbsencesVal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/excessiveField"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/StudentName"
+            android:text="Large Text"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/button1"
+            android:onClick="addAbsent"
+            android:text="Add absent" />
+
+        <Button
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/numOfAbsencesVal"
+            android:onClick="subAbsent"
+            android:text="Subtract absent" />
 
     </RelativeLayout>
 

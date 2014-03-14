@@ -64,16 +64,16 @@ public class MainActivity extends Activity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.cam_app);
-    //text = (EditText) findViewById(R.id.editText1);
     inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-    getActionBar().setDisplayHomeAsUpEnabled(true);
+
     gridview = (GridView) findViewById(R.id.gridview);
     gridviewButtons = (GridView) findViewById(R.id.pictureGallery);
     ald = new AttendanceListDAO(getApplicationContext());
     ald.open();
     className = getIntent().getExtras().getString("Class Name");
     ald.viewClassListFromClass(className);
+    
     sectionList = ald.viewAllSections(className);
     Log.d("MainActivity",sectionList.size()+"");
     currSection = sectionList.get(0);
@@ -131,7 +131,7 @@ public class MainActivity extends Activity {
     	    String date = dateFormat.format(new Date());
     	    String photoFile = classListArrayTemp.get(position)+" "+ date + ".jpg";
     	    SimpleDateFormat dateFormatmdy = new SimpleDateFormat("MM-dd-yy");
-    	    String date2 = dateFormat.format(new Date());
+    	    String date2 = dateFormatmdy.format(new Date());
     	    String filename = pictureFileDir.getPath() + File.separator + photoFile;
     	    File pictureFile = new File(filename);
     	    ImageView img = (ImageView) v.findViewById(R.id.grid_item_image);
@@ -161,9 +161,7 @@ public class MainActivity extends Activity {
 	  for (ClassList cl : classList) {
 		if(cl.hasPictureTakenM()){
 		}	
-		else{
-	//		Log.d("MainActivity",cl.getStudentName()+" is absent");
-			
+		else{			
 			AttendanceListDAO ald = new AttendanceListDAO(getApplicationContext());
 			ald.open();
 			ald.addAbsent(cl.getStudentName(),className,1);

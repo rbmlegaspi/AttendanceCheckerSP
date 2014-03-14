@@ -91,6 +91,7 @@ public class ImageAdapter extends BaseAdapter{
 			imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
 			if(images.get(position)==null) imageView.setImageBitmap(bmp);
 			else {
+				
 				imageView.setImageBitmap(images.get(position));
 				
 			}
