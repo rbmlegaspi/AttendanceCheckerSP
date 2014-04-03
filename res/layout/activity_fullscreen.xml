@@ -132,7 +132,7 @@
                 android:layout_marginTop="31dp"
                 android:layout_toLeftOf="@+id/griditem_stdnum"
                 android:background="#ffffff"
-                android:onClick="debug"
+                android:onClick="setPassword"
                 android:src="@drawable/set" />
 
             <TextView
@@ -144,11 +144,20 @@
                 android:layout_marginBottom="38dp"
                 android:clickable="true"
                 android:gravity="center"
-                android:onClick="debug"
-                android:text="Settings"
+                android:onClick="setPassword"
+                android:text="Set Password"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000"
                 android:textSize="40sp" />
+
+            <Button
+                android:id="@+id/ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:onClick="debug"
+                android:text="Debug" />
 
         </RelativeLayout>
 

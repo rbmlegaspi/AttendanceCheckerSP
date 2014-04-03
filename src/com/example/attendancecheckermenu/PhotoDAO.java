@@ -73,6 +73,25 @@ public class PhotoDAO {
 		return photoAL;
 	}
 	
+	public boolean photoHasBeenTaken(String studentName, String className, String date){
+		String[] s = {
+				AttendanceDbHelper.COL_PICTURE_STDNAME
+		};
+		
+		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_PICDB, s, 
+				AttendanceDbHelper.COL_PICTURE_DATE_TAKEN+" = '"+date+"' and "
+				+AttendanceDbHelper.COL_PICTURE_STDNAME+" = '"+studentName+"' and "
+				+AttendanceDbHelper.COL_PICTURE_CLASS_NAME+" = '"+className+"'"	,
+				null, null, null, null);
+		
+		
+		c.moveToFirst();
+		
+		if(c.getCount()==0) return false;
+		else return true;
+		
+	}
+	
 	public ArrayList<Photo> getAllPhotosFromStudent(String studentName,String className) throws SQLException{
 		ArrayList<Photo> photoAL = new ArrayList<Photo>();
 		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_PICDB, PhotoTableCol,
@@ -120,7 +139,7 @@ public class PhotoDAO {
 	public ArrayList<Photo> getAllPhotosFromClassAndDate(String className,String dateTaken) throws SQLException{
 		ArrayList<Photo> photoAL = new ArrayList<Photo>();
 		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_PICDB, PhotoTableCol,
-				AttendanceDbHelper.COL_PICTURE_CLASS_NAME+" = '"+className+"' and" +
+				AttendanceDbHelper.COL_PICTURE_CLASS_NAME+" = '"+className+"' and " +
 				AttendanceDbHelper.COL_PICTURE_DATE_TAKEN+" = '"+dateTaken+"'",
 				null, null, null, null);
 		
@@ -180,5 +199,17 @@ public class PhotoDAO {
 		}
 		
 		return photoAL;
+	}
+
+	public void replacePhotoPath(String absolutePath, String studentName,
+			String string, String dateTaken, String className) {
+		ContentValues cv = new ContentValues();
+		cv.put(AttendanceDbHelper.COL_PICTURE_LOCAL_PATH,absolutePath);
+		db.update(AttendanceDbHelper.DB_TABLE_PICDB, cv, 
+				AttendanceDbHelper.COL_PICTURE_STDNAME+" = '"+studentName+"' and "+
+				AttendanceDbHelper.COL_PICTURE_CLASS_NAME+" = '"+className+"' and " +
+				AttendanceDbHelper.COL_PICTURE_DATE_TAKEN+" = '"+dateTaken+"'"
+				, null);
+		
 	}
 }

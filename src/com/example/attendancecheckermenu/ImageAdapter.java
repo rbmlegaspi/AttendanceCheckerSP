@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
+import android.graphics.BitmapFactory.Options;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.view.LayoutInflater;
@@ -24,12 +27,12 @@ public class ImageAdapter extends BaseAdapter{
 	private Context mContext;
 //	private String[] classList;
 	private ArrayList<String> classList;
-	private ArrayList<Bitmap> images;
+	private ArrayList<String> images;
 	//	private Bitmap[] images;
 	private ImageView img;
 	private Bitmap bmp;
 	
-	public ImageAdapter(Context c,ArrayList<String> classList,ArrayList<Bitmap> images,ImageView img) {
+	public ImageAdapter(Context c,ArrayList<String> classList,ArrayList<String> images,ImageView img) {
 		this.classList = classList;
 		mContext = c;
 		this.images = images;
@@ -72,13 +75,19 @@ public class ImageAdapter extends BaseAdapter{
 			
 			studentName = (TextView) gridView
 					.findViewById(R.id.grid_item_label);
-			studentName.setText(classList.get(position));
+			studentName.setText(classList.get(position).substring(0, classList.get(position).indexOf(",")));
 			bmp = Bitmap.createBitmap(85,85,Config.ARGB_8888);
 			imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
-			if(images.get(position)==null) imageView.setImageBitmap(bmp);
+			if(images.get(position).equals("nopic"));// imageView.setImageBitmap(bmp);
 			else {
-				imageView.setImageBitmap(images.get(position));
-				
+			    Options opts = new Options();
+			  	opts.inSampleSize = 8;
+			  	Bitmap bitmap = BitmapFactory.decodeFile(images.get(position),opts);
+			  	Matrix m = new Matrix();
+			  	m.postRotate(270);
+			  	Bitmap rotated = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),m,true);
+//				imageView.setImageBitmap(bitmap);
+				imageView.setImageBitmap(rotated);
 			}
 			
 		    
@@ -86,13 +95,22 @@ public class ImageAdapter extends BaseAdapter{
         	gridView = (View) convertView;
         	studentName = (TextView) gridView
 					.findViewById(R.id.grid_item_label);
-			studentName.setText(classList.get(position));
+			studentName.setText(classList.get(position).substring(0, classList.get(position).indexOf(",")));
 			Bitmap bmp = Bitmap.createBitmap(85,85,Config.ARGB_8888);
 			imageView = (ImageView) gridView.findViewById(R.id.grid_item_image);
-			if(images.get(position)==null) imageView.setImageBitmap(bmp);
-			else {
+			if(images.get(position).equals("nopic")) {
 				
-				imageView.setImageBitmap(images.get(position));
+//				imageView.setImageBitmap(bmp);
+			}
+			else {
+				Options opts = new Options();
+			  	opts.inSampleSize = 8;
+			  	Bitmap bitmap = BitmapFactory.decodeFile(images.get(position),opts);
+			  	Matrix m = new Matrix();
+			  	m.postRotate(270);
+			  	Bitmap rotated = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),m,true);
+//				imageView.setImageBitmap(bitmap);
+				imageView.setImageBitmap(rotated);
 				
 			}
         }

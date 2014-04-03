@@ -37,6 +37,8 @@ public class ViewSectionFragment extends Fragment{
 		
 			className = cn.getClassName();
 
+
+			
 			Log.d("ViewClassList",className);
 			TextView tv = (TextView) v.findViewById(R.id.tw);
  			tv.setText(className);

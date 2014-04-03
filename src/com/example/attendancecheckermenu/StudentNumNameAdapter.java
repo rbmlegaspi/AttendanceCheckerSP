@@ -3,6 +3,10 @@ package com.example.attendancecheckermenu;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.graphics.BitmapFactory.Options;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,9 +41,18 @@ public class StudentNumNameAdapter extends ArrayAdapter<String>{
 	    textView2.setText(values2.get(position));
 	    textView1.setText(values1.get(position));
 	    
-	    if(values3.get(position).equals("nopic")){
+	    if(!values3.get(position).equals("nopic")){
 	    	
+	    	Options opts = new Options();
+		  	opts.inSampleSize = 8;
+		  	Bitmap bitmap = BitmapFactory.decodeFile(values3.get(position),opts);
+		  	Matrix m = new Matrix();
+		  	m.postRotate(270);
+		  	Bitmap rotated = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),m,true);
+//			imageView.setImageBitmap(bitmap);
+			imageView.setImageBitmap(rotated);
 	    }
+	    
 	    
 	    // change the icon for Windows and iPhone
 	    return v;

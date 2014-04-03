@@ -180,6 +180,40 @@ public class AttendanceListDAO {
 		return c.getString(0);
 	};
 	
+	public void dropEverything(){
+		db.execSQL("DROP "+AttendanceDbHelper.DB_NAME);
+	}
+	
+	public void setOriginalPicture(String pathName, String className,String student){
+		String cond = getOriginalPicture(className,student);
+		
+		if(cond.equals("nopic")){
+			ContentValues cv = new ContentValues();
+			cv.put(AttendanceDbHelper.COL_STDPIC, pathName);
+			db.update(AttendanceDbHelper.DB_TABLE_CLASS_LIST, cv,
+					AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"' and "+
+					AttendanceDbHelper.COL_STDNAME+" = '"+student+"'",
+					null);
+		}
+			
+	}
+	
+	public String getOriginalPicture(String className,String student){
+		String[] s ={
+				AttendanceDbHelper.COL_STDPIC
+		};
+		
+		Cursor cursor = db.query(AttendanceDbHelper.DB_TABLE_CLASS_LIST, s,
+						AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"' and "+
+						AttendanceDbHelper.COL_STDNAME+" = '"+student+"'"
+						, null, null, null, null);
+		
+		cursor.moveToFirst();
+		return cursor.getString(0);
+	
+	}
+	
+	
 	public void setNoPicToAbsent(String className,String student){
 		ContentValues cv = new ContentValues();
 		cv.put(AttendanceDbHelper.COL_HAS_TAKEN_PICTURE, "false");
@@ -256,16 +290,21 @@ public class AttendanceListDAO {
 		
 		c.moveToFirst();
 		
+		AttendanceClassNameDAO acnd = new AttendanceClassNameDAO(this.c);
+		acnd.open();
+		int excessiveNum = acnd.getNumOfExcessiveAbsences(className);
+		acnd.close();
+		
 		int new_absent = c.getInt(0)+num;
 		boolean excessive = Boolean.parseBoolean(c.getString(1));
 		ContentValues cv = new ContentValues();
 		ContentValues cvret = new ContentValues();
 		cv.put(AttendanceDbHelper.COL_NUM_ABSENCES, new_absent);
-		if(new_absent>7){
+		if(new_absent>excessiveNum){
 			excessive = true;
 			cv.put(AttendanceDbHelper.COL_EXCESSIVE, excessive);
 		}
-		else if(new_absent<=7){
+		else if(new_absent<=excessiveNum){
 			excessive = false;
 			cv.put(AttendanceDbHelper.COL_EXCESSIVE, excessive);
 		}
@@ -280,6 +319,29 @@ public class AttendanceListDAO {
 		cvret.put("numAbsent",new_absent);
 		
 		return cvret;
+		
+	}
+
+	public ArrayList<String> getOriginalPictures(String className, String section) {
+		// TODO Auto-generated method stub
+		ArrayList<String> students = new ArrayList<String>();
+		String[] studentCol = {AttendanceDbHelper.COL_STDPIC};
+		
+		
+		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_CLASS_LIST, 
+				studentCol, AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"' and "+
+						AttendanceDbHelper.COL_SECTION+" = '"+section+"'",
+						null,
+						null, null, null);
+		
+		c.moveToFirst();
+		
+		while(!c.isAfterLast()){
+			students.add(c.getString(0));
+			c.moveToNext();
+		}
+		
+		return students;
 		
 	}
 	

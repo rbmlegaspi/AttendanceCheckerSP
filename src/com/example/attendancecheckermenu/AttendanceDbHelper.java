@@ -8,7 +8,7 @@ import android.widget.Toast;
 
 public class AttendanceDbHelper extends SQLiteOpenHelper{
 
-	private static final String DB_NAME = "AttendanceDb";
+	public static final String DB_NAME = "AttendanceDb";
 	public static final String DB_TABLE_CLASS_NAME = "ATTENDANCE_RECORD";
 	public static final String DB_TABLE_CLASS_LIST = "CLASS_LIST";
 	public static final String DB_TABLE_PASSWORD = "PASSWORD";
@@ -24,6 +24,7 @@ public class AttendanceDbHelper extends SQLiteOpenHelper{
 	public static final String COL_SA_2 = "SA_2";
 	public static final String COL_SA_3 = "SA_3";
 	public static final String COL_HAS_CLASS_LIST = "HAS_CLASSLIST";
+	public static final String COL_EXCESSIVE_NUM = "NUM_OF_EXCESSIVE";
 	
 	public static final String COL_STDNUM = "STUDENT_NUMBER";
 	public static final String COL_STDNAME = "STUDENT_NAME";
@@ -65,14 +66,18 @@ public class AttendanceDbHelper extends SQLiteOpenHelper{
 				+ COL_LECTURER + " TEXT NOT NULL,"
 				+ COL_SA_1 + " TEXT NOT NULL,"
 				+ COL_SA_2 + " TEXT NOT NULL,"
-				+ COL_SA_3 + " TEXT NOT NULL"
+				+ COL_SA_3 + " TEXT NOT NULL,"
+				+ COL_HAS_CLASS_LIST+ " TEXT NOT NULL,"
+				+ COL_EXCESSIVE_NUM+" INTEGER NOT NULL"
 				+ ");"
 		);
+		
 		
 		db.execSQL("CREATE TABLE "+DB_TABLE_CLASS_LIST+" ("
 				+ COL_STDNUM +" TEXT PRIMARY KEY,"
 				+ COL_STDNAME+" INTEGER NOT NULL,"
 				+ COL_LEC_SECTION+" TEXT NOT NULL,"
+				+ COL_CLASS_NAME+" TEXT NOT NULL,"
 				+ COL_SECTION+" INTEGER NOT NULL,"
 				+ COL_STDPIC +" TEXT NOT NULL,"
 				+ COL_NUM_ABSENCES + " TEXT NOT NULL,"

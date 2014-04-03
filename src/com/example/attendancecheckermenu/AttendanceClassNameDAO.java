@@ -22,7 +22,8 @@ public class AttendanceClassNameDAO {
 			AttendanceDbHelper.COL_SA_1,
 			AttendanceDbHelper.COL_SA_2,
 			AttendanceDbHelper.COL_SA_3,
-			AttendanceDbHelper.COL_HAS_CLASS_LIST
+			AttendanceDbHelper.COL_HAS_CLASS_LIST,
+			AttendanceDbHelper.COL_EXCESSIVE_NUM
 	};
 	
 	 
@@ -44,7 +45,7 @@ public class AttendanceClassNameDAO {
 		dbHelper.close();
 	}
 	
-	public long insertClassToDb(String className,int classSize,String lecturer, String SA_1,String SA_2, String SA_3)
+	public long insertClassToDb(String className,int classSize,String lecturer, String SA_1,String SA_2, String SA_3,int numOfExcessive)
 	{
 		ContentValues values = new ContentValues();
 		values.put(AttendanceClassNameCol[0], className);
@@ -54,6 +55,7 @@ public class AttendanceClassNameDAO {
 		values.put(AttendanceClassNameCol[4], SA_2);
 		values.put(AttendanceClassNameCol[5], SA_3);
 		values.put(AttendanceClassNameCol[6], "false");
+		values.put(AttendanceClassNameCol[7], numOfExcessive);
 		long insertClassName = db.insert(AttendanceDbHelper.DB_TABLE_CLASS_NAME, null, values);
 		
 		return insertClassName;
@@ -69,6 +71,7 @@ public class AttendanceClassNameDAO {
 	public void dropAndCreateClassListDebug(){
 		db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_CLASS_LIST);
 		db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_PICDB);
+		db.execSQL("DROP TABLE IF EXISTS " + AttendanceDbHelper.DB_TABLE_CLASS_NAME);
 		db.execSQL("CREATE TABLE "+AttendanceDbHelper.DB_TABLE_PICDB+" ("
 				+ AttendanceDbHelper.COL_PICTURE_LOCAL_PATH +" TEXT NOT NULL,"
 				+ AttendanceDbHelper.COL_PICTURE_STDNUM +" TEXT NOT NULL,"
@@ -91,62 +94,20 @@ public class AttendanceClassNameDAO {
 				+ AttendanceDbHelper.COL_ID+" INTEGER PRIMARY KEY AUTOINCREMENT "
 				+ ");"
 		);
-	}
-	
-	public void createTableDebug()
-	{
+
 		db.execSQL("CREATE TABLE "+ AttendanceDbHelper.DB_TABLE_CLASS_NAME +" ("
 				+ AttendanceDbHelper.COL_CLASS_NAME +" TEXT PRIMARY KEY,"
 				+ AttendanceDbHelper.COL_CLASS_SIZE +" INTEGER NOT NULL,"
 				+ AttendanceDbHelper.COL_LECTURER + " TEXT NOT NULL,"
 				+ AttendanceDbHelper.COL_SA_1 + " TEXT NOT NULL,"
 				+ AttendanceDbHelper.COL_SA_2 + " TEXT NOT NULL,"
-				+ AttendanceDbHelper.COL_SA_3 + " TEXT NOT NULL"
-				+ AttendanceDbHelper.COL_HAS_CLASS_LIST +" TEXT NOT NULL"				
-				+ ");"
-		);
-		
-		db.execSQL("CREATE TABLE "+AttendanceDbHelper.DB_TABLE_CLASS_LIST+" ("
-				+ AttendanceDbHelper.COL_STDNUM +" TEXT PRIMARY KEY,"
-				+ AttendanceDbHelper.COL_STDNAME+" INTEGER NOT NULL,"
-				+ AttendanceDbHelper.COL_LEC_SECTION+" INTEGER NOT NULL,"
-				+ AttendanceDbHelper.COL_SECTION+" INTEGER NOT NULL,"
-				+ AttendanceDbHelper.COL_STDPIC +" TEXT NOT NULL,"
-				+ AttendanceDbHelper.COL_NUM_ABSENCES + " TEXT NOT NULL,"
-				+ AttendanceDbHelper.COL_EXCESSIVE + " TEXT NOT NULL,"
-				+ AttendanceDbHelper.COL_DATES_ABSENT + " TEXT NOT NULL"
-				+ ");"
-		);
-		
-		db.execSQL("CREATE TABLE "+AttendanceDbHelper.DB_TABLE_PICDB+" ("
-				+ AttendanceDbHelper.COL_PICTURE_LOCAL_PATH +" TEXT NOT NULL,"
-				+ AttendanceDbHelper.COL_PICTURE_STDNUM +" TEXT NOT NULL,"
-				+ AttendanceDbHelper.COL_PICTURE_DATE_TAKEN +" TEXT NOT NULL"
-				+ ");"
-		);
-		
-		db.execSQL("CREATE TABLE "+AttendanceDbHelper.DB_TABLE_PASSWORD+" ("
-				+ AttendanceDbHelper.COL_PASSWORD +" TEXT NOT NULL,"
-				+ AttendanceDbHelper.COL_PASSWORD_MD5 +" INTEGER NOT NULL"
+				+ AttendanceDbHelper.COL_SA_3 + " TEXT NOT NULL,"
+				+ AttendanceDbHelper.COL_HAS_CLASS_LIST +" TEXT NOT NULL,"
+				+ AttendanceDbHelper.COL_EXCESSIVE_NUM+" INTEGER NOT NULL"
 				+ ");"
 		);
 	}
-
-	public void debugColumns(String className){
-		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_CLASS_LIST, null, null, null, null, null, null);
 		
-		String[] wow = c.getColumnNames();
-		
-		String s = "";
-		
-		for (String x : wow) {
-			s+= x;
-		}
-		
-		Log.d("ViewClassList",s);
-		
-	}
-	
 	public void setClassListToTrue(String className){
 	
 		ContentValues cv = new ContentValues();
@@ -204,5 +165,35 @@ public class AttendanceClassNameDAO {
 		c.close();
 		return ClassName;
 		
+	}
+
+	public int getNumOfExcessiveAbsences(String className) {
+		// TODO Auto-generated method stub
+		
+		String[] colName = {
+				AttendanceDbHelper.COL_EXCESSIVE_NUM
+		};
+		
+		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_CLASS_NAME, colName, 
+				AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"'"
+				, null,null,null,null);
+		
+		c.moveToFirst();
+		
+		return c.getInt(0);
+	}
+	
+	public boolean classNameExists(String className){
+		String[] colName = {
+				AttendanceDbHelper.COL_CLASS_NAME
+		};
+		
+		Cursor c = db.query(AttendanceDbHelper.DB_TABLE_CLASS_NAME, colName, 
+				AttendanceDbHelper.COL_CLASS_NAME+" = '"+className+"'"
+				, null,null,null,null);
+		
+		c.moveToFirst();
+		if(c.getCount()==0) return false;
+		else return true;
 	}
 }

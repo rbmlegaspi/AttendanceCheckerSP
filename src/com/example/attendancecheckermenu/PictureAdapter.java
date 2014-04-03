@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.Config;
 import android.graphics.BitmapFactory.Options;
+import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,12 +68,17 @@ public class PictureAdapter extends BaseAdapter{
 				Bitmap bmp = Bitmap.createBitmap(85,85,Config.ARGB_8888);
 				imageView = (ImageView) gridView.findViewById(R.id.attendancePicture);
 				
-				if(pathName.get(position).equals("no picture")) imageView.setImageBitmap(bmp);
+				if(pathName.get(position).equals("no picture")){
+					Options opts = new Options();
+	    	    	opts.inSampleSize = 4;
+	    	    	Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.wrongz, opts);
+					imageView.setImageBitmap(bitmap);
+				}
 				else {
 	    	    	Options opts = new Options();
 	    	    	opts.inSampleSize = 4;
-					Bitmap bitmap = BitmapFactory.decodeFile(pathName.get(position),opts);
-					
+	    	    	Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.wrongz, opts);
+					imageView.setImageBitmap(bitmap);
 				}
 
 	    }
@@ -85,7 +91,12 @@ public class PictureAdapter extends BaseAdapter{
 			Bitmap bmp = Bitmap.createBitmap(85,85,Config.ARGB_8888);
 			imageView = (ImageView) gridView.findViewById(R.id.attendancePicture);
 			
-			if(pathName.get(position).equals("no picture")) imageView.setImageBitmap(bmp);
+			if(pathName.get(position).equals("no picture")) {
+				Options opts = new Options();
+    	    	opts.inSampleSize = 4;
+    	    	Bitmap bitmap = BitmapFactory.decodeResource(null, R.drawable.wrongz, opts);
+				imageView.setImageBitmap(bitmap);
+			}
 			else {
     	    	Options opts = new Options();
     	    	opts.inSampleSize = 4;

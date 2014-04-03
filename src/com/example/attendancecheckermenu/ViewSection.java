@@ -32,7 +32,7 @@ public class ViewSection extends Activity {
 		
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
-		className = getIntent().getExtras().getString("Class Name")+"";
+		className = getIntent().getExtras().getString("className")+"";
 		
 		setContentView(R.layout.activity_view_section);
 		//final ListView list = (ListView) findViewById(R.id.classListView);

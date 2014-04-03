@@ -51,12 +51,12 @@ public class MainActivity extends Activity {
   private GridView gridviewButtons = null;
   static ArrayList<String> classListArrayTemp;
   private ArrayList<String> sectionList;
-  static ArrayList<Bitmap> pictureArrayTemp;
+  static ArrayList<String> pictureArrayTemp;
   private AttendanceListDAO ald;
   private String className;
   private String currSection;
   private HashMap<String,ArrayList<String>> sectionMap;
-  private HashMap<String,ArrayList<Bitmap>> bitMap;
+  private HashMap<String,ArrayList<String>> bitMap;
   private HashMap<String,ArrayList<String>> studentNumMap;
   
   
@@ -82,7 +82,7 @@ public class MainActivity extends Activity {
     
     sectionMap = new HashMap<String, ArrayList<String>>();
     studentNumMap = new HashMap<String, ArrayList<String>>();
-    bitMap = new HashMap<String, ArrayList<Bitmap>>();
+    bitMap = new HashMap<String, ArrayList<String>>();
     
     for(String s: sectionList){
     	
@@ -91,13 +91,11 @@ public class MainActivity extends Activity {
     	ArrayList<String> studNTemp = ald.viewClassListPerSectionStdNum(className, s);
     	studentNumMap.put(s, studNTemp);
     	
-    	ArrayList<Bitmap> bitTemp = new ArrayList<Bitmap>();
-    	for(int i=0;i<sectionMap.get(s).size();i++){
-    		Bitmap bmp = Bitmap.createBitmap(85,85,Config.ARGB_8888);
-    		bitTemp.add(bmp);
-    	}
+    	ArrayList<String> bitTemp = ald.getOriginalPictures(className,s);
     	bitMap.put(s, bitTemp);
-    	index++;
+    	for(String sz: bitTemp){
+    		Log.d("MainActivity",sz);
+    	}
     }
     
     classListArrayTemp = sectionMap.get(currSection);
@@ -106,6 +104,8 @@ public class MainActivity extends Activity {
     gridview.setAdapter(imgAdapter);
     gridviewButtons.setAdapter(new ButtonAdapter(this, sectionList));
     ald.close();
+    
+
     gridviewButtons.setOnItemClickListener(new OnItemClickListener() {
     	
     	public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
@@ -123,13 +123,12 @@ public class MainActivity extends Activity {
     		File pictureFileDir = getDir();
 
     	    if (!pictureFileDir.exists() && !pictureFileDir.mkdirs()) {
-
-    	      Toast.makeText(MainActivity.this, "Can't create directory to save image.",Toast.LENGTH_LONG).show();
-
+    	    	Toast.makeText(MainActivity.this, "Can't create directory to save image.",Toast.LENGTH_LONG).show();
     	    }
     	    SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yy hh:mm:ss");
     	    String date = dateFormat.format(new Date());
-    	    String photoFile = classListArrayTemp.get(position)+" "+ date + ".jpg";
+    	    String classListSelected = classListArrayTemp.get(position);
+    	    String photoFile = classListSelected+" "+ date + ".jpg";
     	    SimpleDateFormat dateFormatmdy = new SimpleDateFormat("MM-dd-yy");
     	    String date2 = dateFormatmdy.format(new Date());
     	    String filename = pictureFileDir.getPath() + File.separator + photoFile;
@@ -137,15 +136,49 @@ public class MainActivity extends Activity {
     	    ImageView img = (ImageView) v.findViewById(R.id.grid_item_image);
             TextView txt = (TextView) v.findViewById(R.id.grid_item_label);
             String studentNumber = studentNumMap.get(currSection).get(position);
-            Log.d("MainActivity",studentNumber);
-//    	    mCamera.takePicture(null, null, new PhotoHandler(getApplicationContext(),filename,pictureFile,img,txt,pictureArrayTemp,classListArrayTemp,position,mCamera,gridview,imgAdapter));
-    	 
+            
+            
             mCamera.takePicture(null, null, new PhotoHandler(getApplicationContext(),filename,studentNumber,className, pictureFile,date2, img,txt,pictureArrayTemp,classListArrayTemp,position,mCamera,gridview));
     	}
     });
     
-   }
+}
+  
+  @Override
+  public void onBackPressed(){
+	  showPasswordDialog();
+  }
+  
+  
+  public void showPasswordDialog(){
+	  final PasswordDAO passDAO = new PasswordDAO(MainActivity.this);
+		
+		final Dialog d = new Dialog(MainActivity.this);
+		d.setTitle("Enter password to continue");
+		d.setContentView(R.layout.confirm_password);
+		Button bd = (Button) d.findViewById(R.id.enterPassButton);
+		bd.setOnClickListener(new View.OnClickListener() {				
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView) d.findViewById(R.id.enterPass);
+				String oPass =  tv.getText()+"";
+				passDAO.open();
+				String message = passDAO.confirmPassword(oPass);
+				passDAO.close();
+				
+				if(message.equals("Invalid password")){
+				}
+				else{
+					d.dismiss();
+					finish();
+				}
+				Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+			}
+		});
 
+		d.show();
+  }
+  
   
   public void finishAttendance(View view){
 	  ald = new AttendanceListDAO(getApplicationContext());
@@ -178,25 +211,55 @@ public class MainActivity extends Activity {
 	  finish();
   }
   
+  
   public boolean onCreateOptionsMenu(Menu menu) {
 	    // Inflate the menu items for use in the action bar
 	    MenuInflater inflater = getMenuInflater();
 	    inflater.inflate(R.menu.action_bar_attendance, menu);
 	    return super.onCreateOptionsMenu(menu);
 	}
-	
+
+  public void password(){
+	  final PasswordDAO passDAO = new PasswordDAO(MainActivity.this);
+		
+		final Dialog d = new Dialog(MainActivity.this);
+		d.setTitle("Enter password to continue");
+		d.setContentView(R.layout.confirm_password);
+		Button bd = (Button) d.findViewById(R.id.enterPassButton);
+		bd.setOnClickListener(new View.OnClickListener() {				
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				TextView tv = (TextView) d.findViewById(R.id.enterPass);
+				String oPass =  tv.getText()+"";
+				passDAO.open();
+				String message = passDAO.confirmPassword(oPass);
+				passDAO.close();
+				
+				if(message.equals("Invalid password")){
+				}
+				else{
+					finishAttendance(null);
+					d.dismiss();
+				}
+				Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
+			}
+		});
+
+		d.show();
+  }
+  
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    // Handle presses on the action bar items
 		
 		switch (item.getItemId()) {
-	        case R.id.finish_attendance_op:
+	        default:
 	        	AlertDialog.Builder builder = new AlertDialog.Builder(this);
 	        	builder.setMessage("Do you want to finish checking the attendance?");
 	        	builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface arg0, int arg1) {
 						// TODO Auto-generated method stub
-						finishAttendance(null);
+						password();
 						
 					}
 				});
@@ -210,11 +273,10 @@ public class MainActivity extends Activity {
 	        	AlertDialog dialog = builder.create();
 	        	dialog.show();
 	        	return true;
-	        default:
-	            return super.onOptionsItemSelected(item);
+	       
 	    }
 	}
-  
+ 
   private File getDir() {
 	    File sdDir = Environment
 	      .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
@@ -229,9 +291,10 @@ public class MainActivity extends Activity {
           mCamera = null;
       }
   }
-  
+   
   public void onResume()
   {
+	  
 	  super.onResume();
 	
 	  int n = Camera.getNumberOfCameras();
@@ -244,25 +307,26 @@ public class MainActivity extends Activity {
 			}
 		}
 	  
-		Log.d("MainActivity",cameraId+"");
-		
-	  mCamera = Camera.open(cameraId);
-	  mPreview = new CameraPreview(this, mCamera);
+		mCamera = Camera.open(cameraId);
+	  	mCamera.setDisplayOrientation(90);
+	    Camera.Parameters params = mCamera.getParameters();
+
+	    params.setRotation(270);
+	  	mCamera.setParameters(params);
+	  	mPreview = new CameraPreview(this, mCamera);
 	    FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
-	  	ViewGroup.LayoutParams params = mPreview.getLayoutParams();
-	    preview.addView(mPreview);
-	  
+	  	preview.addView(mPreview);
 	  
   }
   
   
   
   protected void onPause() {
-	    if (mCamera != null) {
+	  if (mCamera != null) {
 	      mCamera.release();
 	     
 	    }
 	    super.onPause();
-}
+  }
   
 } 

@@ -19,8 +19,8 @@
         android:layout_height="match_parent" >
 
                 <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" >
+                    android:layout_width="match_parent"
+                    android:layout_height="590dp" >
 
             <TextView
                 android:id="@+id/sectionText"
@@ -55,19 +55,6 @@
 
                 <requestFocus />
             </EditText>
-
-            <Button
-                android:id="@+id/saveButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignLeft="@+id/classNameFragItem"
-                android:layout_alignParentBottom="true"
-                android:layout_below="@+id/sa3"
-                android:layout_marginBottom="92dp"
-                android:onClick="saveClassList"
-                android:text="@string/text_save"
-                android:textColor="#000000"
-                android:textColorHint="#000000" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -151,6 +138,34 @@
                 android:text="Student Assistant 1"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/excTxt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/sa3"
+                android:layout_below="@+id/sa3"
+                android:text="Number of Excessive Absences"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="#000000" />
+
+            <EditText
+                android:id="@+id/numExcessiveF"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@+id/excTxt"
+                android:layout_below="@+id/excTxt"
+                android:ems="10"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/nopls"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignRight="@+id/sectionText"
+                android:layout_below="@+id/numExcessiveF"
+                android:onClick="saveClassList"
+                android:text="Save class" />
 
         </RelativeLayout>
 

@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 public class CreateMenu extends Activity {
 	AttendanceClassNameDAO ald;
-	EditText classNameText,classNumText,lecText,sa1Text,sa2Text,sa3Text;
+	EditText classNameText,classNumText,lecText,sa1Text,sa2Text,sa3Text,excNum;
 	
 	
 	protected void onCreate(Bundle savedInstanceState) {
@@ -41,28 +41,40 @@ public class CreateMenu extends Activity {
 		sa1Text = (EditText) findViewById(R.id.sa1);
 		sa2Text = (EditText) findViewById(R.id.sa2);
 		sa3Text = (EditText) findViewById(R.id.sa3);
+		excNum = (EditText) findViewById(R.id.numExcessiveF);
 		
-		boolean b = true;
-		try{
-			String className = classNameText.getText().toString();
-			int numOfStudent = Integer.parseInt(classNumText.getText().toString());
-			String lecturer = lecText.getText().toString();
-			String sa1 = sa1Text.getText().toString();
-			String sa2 = sa2Text.getText().toString();
-			String sa3 = sa3Text.getText().toString();
-			ald.open();
-			ald.insertClassToDb(className, numOfStudent, lecturer, sa1, sa2, sa3);
-			ald.close();
+		ald.open();
+		boolean exists = ald.classNameExists(classNameText.getText().toString());
+		ald.close();
+		
+
+		if(exists){
+			Toast.makeText(CreateMenu.this, "Class already exists", Toast.LENGTH_LONG).show();
+		}
+		else{
+			try
+			{
+					String className = classNameText.getText().toString();
+					int numOfStudent = Integer.parseInt(classNumText.getText().toString());
+					String lecturer = lecText.getText().toString();
+					String sa1 = sa1Text.getText().toString();
+					String sa2 = sa2Text.getText().toString();
+					String sa3 = sa3Text.getText().toString();
+					int numExc = Integer.parseInt(excNum.getText().toString());
+					Toast.makeText(CreateMenu.this, "Class list succesfully updated", Toast.LENGTH_SHORT).show();
+					ald.open();
+					ald.insertClassToDb(className, numOfStudent, lecturer, sa1, sa2, sa3,numExc);
+					ald.close();
+						
+				}catch(Exception e){
+					Toast.makeText(CreateMenu.this, e.toString(), Toast.LENGTH_LONG).show();
+				}finally{
+					
+				}
 				
-		}catch(Exception e){
-			Toast.makeText(CreateMenu.this, e.toString(), Toast.LENGTH_LONG).show();
-		}finally{
-			
+				finish();
 		}
 		
-		finish();
 	}
-	
-	
 	
 }

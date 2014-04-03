@@ -19,7 +19,9 @@
 	    android:layout_width="match_parent"
 	    android:layout_height="140dp"
 	    android:layout_below="@+id/camera_preview"
+	    android:gravity="center"
 	    android:numColumns="6" >
+
 	</GridView>
 	<GridView
 	    android:id="@+id/gridview"

@@ -3,6 +3,7 @@ package com.example.attendancecheckermenu;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.Config;
@@ -33,46 +34,46 @@ public class DateGalleryAdapter extends BaseAdapter{
 	     
 	    if(listView==null){
         	
-	    	v = inflater.inflate(R.layout.griditem_classgrid, parent, false);
+	    	v = inflater.inflate(R.layout.griditem_layout, parent, false);
         	
             TextView textView1 = (TextView) v.findViewById(R.id.griditem_name);
-    	    TextView textView2 = (TextView) v.findViewById(R.id.griditem_stdnum);
     	    ImageView imageView = (ImageView) v.findViewById(R.id.griditem_pic);
     	    
-    	    textView2.setText(values.get(position).getStdNum());
-    	    textView1.setText(values.get(position).getStdName());
+		    textView1.setText(values.get(position).getStdName().substring(0,values.get(position).getStdName().indexOf(",")));
     	    
-    	    if(!values.get(position).getPathOfFile().equals("nopic")){
+    	    if(!values.get(position).getPathOfFile().equals("no picture")){
     	    	Options opts = new Options();
     	    	opts.inSampleSize = 4;
     	    	Bitmap bitmap = BitmapFactory.decodeFile(values.get(position).getPathOfFile(),opts);
     			imageView.setImageBitmap(bitmap);
     	    }
     	    else{
-    			Bitmap bmp = Bitmap.createBitmap(85,85,Config.ARGB_8888);
-    			imageView.setImageBitmap(bmp);
+    	    	Options opts = new Options();
+    	    	opts.inSampleSize = 4;
+    	    	Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.wrongz, opts);
+				imageView.setImageBitmap(bitmap);
     	    }
 	    
 	    }
 	    else{
-        	v = inflater.inflate(R.layout.griditem_classgrid, parent, false);
+        	v = inflater.inflate(R.layout.griditem_layout, parent, false);
 	    	
 	        TextView textView1 = (TextView) v.findViewById(R.id.griditem_name);
-		    TextView textView2 = (TextView) v.findViewById(R.id.griditem_stdnum);
 		    ImageView imageView = (ImageView) v.findViewById(R.id.griditem_pic);
 		    
-		    textView2.setText(values.get(position).getStdNum());
-		    textView1.setText(values.get(position).getStdName());
+		    textView1.setText(values.get(position).getStdName().substring(0,values.get(position).getStdName().indexOf(",")));
 		    
-		    if(!values.get(position).getPathOfFile().equals("nopic")){
+		    if(!values.get(position).getPathOfFile().equals("no picture")){
     	    	Options opts = new Options();
     	    	opts.inSampleSize = 4;
     	    	Bitmap bitmap = BitmapFactory.decodeFile(values.get(position).getPathOfFile(),opts);
     			imageView.setImageBitmap(bitmap);
 		    }
     	    else{
-    			Bitmap bmp = Bitmap.createBitmap(85,85,Config.ARGB_8888);
-    			imageView.setImageBitmap(bmp);
+    	    	Options opts = new Options();
+    	    	opts.inSampleSize = 4;
+    	    	Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.wrongz, opts);
+				imageView.setImageBitmap(bitmap);
     	    }
 
 	    }
